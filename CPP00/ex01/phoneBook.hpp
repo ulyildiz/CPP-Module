@@ -8,7 +8,7 @@ class PhoneBook {
 		Contact contacts[8];
 
 	public:
-ü		int		contactIndex;
+		int		contactIndex;
 		void	addContact(void);
 		void	displayAll(void);
 		void	searchContact(void);
