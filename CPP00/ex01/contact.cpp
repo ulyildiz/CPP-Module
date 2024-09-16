@@ -1,5 +1,6 @@
-#include "phoneBook.hpp"
+#include "PhoneBook.hpp"
 #include <iostream>
+#include <iomanip>
 
 std::string	get_input(std::string message)
 {
@@ -7,7 +8,8 @@ std::string	get_input(std::string message)
 
 	do {
 		std::cout << message;
-		std::getline(std::cin, input);
+		if (!std::getline(std::cin, input))
+			std::exit(0);
 		if (input.empty())
 		{
 			std::cout << "Please enter a valid input." << std::endl;
@@ -18,12 +20,33 @@ std::string	get_input(std::string message)
 	return (input);
 }
 
-void	contact::displayContact(void)
+std::string	truncateAndFix(std::string information)
 {
-	
+	if (information.empty())
+		return ("-");
+	if (information.length() > 10)
+		return (information[9] = '.', information.substr(0, 10));
+	return (information);
 }
 
-void	contact::fillContact(int index)
+void	Contact::displayLimited(void)
+{
+	std::cout << std::setw(10) << this->index << "|";
+	std::cout << std::setw(10) << truncateAndFix(this->firstName) << "|";
+	std::cout << std::setw(10) << truncateAndFix(this->lastName) << "|";
+	std::cout << std::setw(10) << truncateAndFix(this->nickname) << std::endl;
+}
+
+void	Contact::displayExtented(void)
+{
+	std::cout << "First name: " << this->firstName << std::endl;
+	std::cout << "Last name: " << this->lastName << std::endl;
+	std::cout << "Nickname: " << this->nickname << std::endl;
+	std::cout << "Phone number: " << this->phoneNumber << std::endl;
+	std::cout << "Darkest Secret: " << this->darkestSecret << std::endl;
+}
+
+void	Contact::fillContact(int index)
 {
 	this->firstName = get_input("First name: ");
 	this->lastName = get_input("Last name: ");
@@ -33,7 +56,7 @@ void	contact::fillContact(int index)
 	this->index = index;
 }
 
-int	contact::check(void)
+int	Contact::check(void)
 {
 	if (this->firstName.empty())
 		return (1);

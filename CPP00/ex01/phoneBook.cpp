@@ -1,14 +1,13 @@
-#include "phoneBook.hpp"
-#include <iostream>
-#include <stdlib.h>
+#include "PhoneBook.hpp"
+#include <cstdlib>
 
-void	phoneBook::phoneBookExit(void)
+void	PhoneBook::PhoneBookExit(void)
 {
 	std::cout << "Exiting phonebook..." << std::endl;
-	exit(0);
+	std::exit(0);
 }
 
-void	phoneBook::addContact(void)
+void	PhoneBook::addContact(void)
 {
 	if (!(this->contactIndex % 8))
 		this->contactIndex = 0;
@@ -17,12 +16,28 @@ void	phoneBook::addContact(void)
 	this->contactIndex++;
 }
 
-void	phoneBook::displayAll(void)
+void	PhoneBook::displayAll(void)
 {
-	std::cout << "as" << std::endl;
+	for (int max_user = 0; max_user < 8; max_user++)
+	{
+		if (!this->contacts[max_user].check())
+			this->contacts[max_user].displayLimited();
+	}
 }
 
-void	phoneBook::searchContact(void)
+int	checkAllDigit(std::string input)
+{
+	int	i = -1;
+
+	while (input[++i])
+	{
+		if (!('0' <= input[i] && input[i] <= '9'))
+			return (0);
+	}
+	return (1);
+}
+
+void	PhoneBook::searchContact(void)
 {
 	int			wantedIndex;
 	std::string	input;
@@ -32,22 +47,27 @@ void	phoneBook::searchContact(void)
 		std::cout << "The phonebook is all empty." << std::endl;
 		return ;
 	}
-	phoneBook::displayAll();	
-
-	do {
+	PhoneBook::displayAll();
+	while (1)
+	{
 		std::cout << "Enter index: ";
-		std::getline(std::cin, input);
+		if (!std::getline(std::cin, input))
+			std::exit(0);
 		if (input.empty())
+			break ;
+		else if (input == "EXIT")
+			this->PhoneBookExit();
+		else if (!checkAllDigit(input))
 		{
-			std::cout << "Enter proper index.(1-8)" << std::endl;
-			continue ;
-		} //isalpha?
-		wantedIndex = atoi(input.c_str());
-		if (!(1 <= wantedIndex && wantedIndex <= 8))
-		{
-			std::cout << "Enter proper index.(1-8)" << std::endl;
+			std::cout << "Index must consist of digits." << std::endl;
 			continue ;
 		}
-		//this->contacts[wantedIndex - 1].printContact();
-	} while (input.empty());
+		wantedIndex = atoi(input.c_str());
+		if (1 <= wantedIndex && wantedIndex <= 8)
+		{
+			this->contacts[wantedIndex - 1].displayExtented();
+			break ;
+		}
+		std::cout << "Enter an index that in proper range.(1-8)" << std::endl;
+	}
 }
