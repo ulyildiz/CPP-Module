@@ -1,27 +1,25 @@
 #include "PhoneBook.hpp"
 #include <cstdlib>
 
-void	PhoneBook::PhoneBookExit(void)
-{
-	std::cout << "Exiting phonebook..." << std::endl;
-	std::exit(0);
-}
+bool	checkForPrint(std::string input);
 
-void	PhoneBook::addContact(void)
+bool	PhoneBook::addContact(void)
 {
 	if (!(this->contactIndex % 8))
 		this->contactIndex = 0;
 
-	this->contacts[this->contactIndex].fillContact(this->contactIndex + 1);
+	if (!this->_contacts[this->contactIndex].fillContact(this->contactIndex + 1))
+		return (false);
 	this->contactIndex++;
+	return (true);
 }
 
 void	PhoneBook::displayAll(void)
 {
 	for (int max_user = 0; max_user < 8; max_user++)
 	{
-		if (!this->contacts[max_user].check())
-			this->contacts[max_user].displayLimited();
+		if (!this->_contacts[max_user].check())
+			this->_contacts[max_user].displayLimited();
 	}
 }
 
@@ -37,37 +35,40 @@ int	checkAllDigit(std::string input)
 	return (1);
 }
 
-void	PhoneBook::searchContact(void)
+bool	PhoneBook::searchContact(void)
 {
 	int			wantedIndex;
 	std::string	input;
 
-	if (this->contacts[0].check())
+	if (this->_contacts[0].check())
 	{
 		std::cout << "The phonebook is all empty." << std::endl;
-		return ;
+		return (true);
 	}
 	PhoneBook::displayAll();
+	
 	while (1)
 	{
 		std::cout << "Enter index: ";
 		if (!std::getline(std::cin, input))
-			std::exit(0);
-		if (input.empty())
 			break ;
+		if (input.empty())
+			return (true);
 		else if (input == "EXIT")
-			this->PhoneBookExit();
-		else if (!checkAllDigit(input))
+			break ;
+		else if (!checkAllDigit(input) || !checkForPrint(input))
 		{
 			std::cout << "Index must consist of digits." << std::endl;
+			input.clear();
 			continue ;
 		}
 		wantedIndex = std::atoi(input.c_str());
 		if (1 <= wantedIndex && wantedIndex <= 8)
 		{
-			this->contacts[wantedIndex - 1].displayExtented();
-			break ;
+			this->_contacts[wantedIndex - 1].displayExtented();
+			return (true);
 		}
 		std::cout << "Enter an index that in proper range.(1-8)" << std::endl;
 	}
+	return (false);
 }

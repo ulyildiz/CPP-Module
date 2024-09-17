@@ -14,11 +14,17 @@ int	main(int argc, char *argv[])
 		if (!std::getline(std::cin, input))
 			break ;
 		if (input == "ADD")
-			phone_book.addContact();
-		else if (input == "SEARCH")
-			phone_book.searchContact();
+		{
+			if (!phone_book.addContact())
+				break ;
+		}
+		else if (input == "SEARCH")	
+		{
+			if (!phone_book.searchContact())
+				break ;
+		}
 		else if (input == "EXIT")
-			phone_book.PhoneBookExit();
+			break ;
 		else
 			std::cout << "Invalid command." << std::endl;
 	} while (true);

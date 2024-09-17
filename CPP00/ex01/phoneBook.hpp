@@ -5,14 +5,13 @@
 
 class PhoneBook {
 	private:
-		Contact contacts[8];
+		Contact _contacts[8];
 
 	public:
 		int		contactIndex;
-		void	addContact(void);
+		bool	addContact(void);
 		void	displayAll(void);
-		void	searchContact(void);
-		void	PhoneBookExit(void);
+		bool	searchContact(void);
 };
 
 #endif

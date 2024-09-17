@@ -1,9 +1,7 @@
-NAME = zombies
-SRC =	main.cpp \
-		zombieHorde.cpp \
-		Zombie.cpp
+NAME = brain
+SRC =	main.cpp
 OBJ = $(SRC:.cpp=.o)
-FLAGS = -Wall -Wextra -Werror -std=c++98 -g 
+FLAGS = -Wall -Wextra -Werror -std=c++98
 
 $(NAME): $(OBJ)
 	c++ $(FLAGS) $(OBJ) -o $(NAME)

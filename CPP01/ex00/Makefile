@@ -1,4 +1,4 @@
-NAME = zombies
+NAME = zombie
 SRC =	main.cpp \
 		newZombie.cpp \
 		randomChump.cpp \
@@ -8,6 +8,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++98
 
 $(NAME): $(OBJ)
 	c++ $(FLAGS) $(OBJ) -o $(NAME)
+all: $(NAME)
 
 %.o: %.cpp
 	c++ $(FLAGS) -c $< -o $@
