@@ -62,7 +62,7 @@ void	PhoneBook::searchContact(void)
 			std::cout << "Index must consist of digits." << std::endl;
 			continue ;
 		}
-		wantedIndex = atoi(input.c_str());
+		wantedIndex = std::atoi(input.c_str());
 		if (1 <= wantedIndex && wantedIndex <= 8)
 		{
 			this->contacts[wantedIndex - 1].displayExtented();
