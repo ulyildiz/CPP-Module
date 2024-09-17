@@ -1,5 +1,4 @@
 #include "PhoneBook.hpp"
-#include <iostream>
 #include <iomanip>
 
 std::string	get_input(std::string message)
@@ -15,7 +14,7 @@ std::string	get_input(std::string message)
 			std::cout << "Please enter a valid input." << std::endl;
 			continue ;
 		}
-	} while (input.empty()); //??
+	} while (input.empty());
 
 	return (input);
 }
