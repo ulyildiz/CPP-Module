@@ -69,7 +69,8 @@
 	"memory_resource": "cpp",
 	"numeric": "cpp",
 	"random": "cpp",
-	"numbers": "cpp"
+	"numbers": "cpp",
+	"fstream": "cpp"
 },
   "C_Cpp_Runner.cCompilerPath": "clang",
   "C_Cpp_Runner.cppCompilerPath": "clang++",
