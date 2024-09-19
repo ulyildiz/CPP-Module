@@ -16,7 +16,7 @@ bool	PhoneBook::addContact(void)
 
 void	PhoneBook::displayAll(void)
 {
-	for (int max_user = 0; max_user < 8; max_user++)
+	for (int max_user = 0; max_user < 7; max_user++)
 	{
 		if (!this->_contacts[max_user].check())
 			this->_contacts[max_user].displayLimited();
@@ -54,7 +54,7 @@ bool	PhoneBook::searchContact(void)
 			break ;
 		if (input.empty())
 			return (true);
-		else if (input == "EXIT")
+		if (input == "EXIT")
 			break ;
 		else if (!checkAllDigit(input) || !checkForPrint(input))
 		{
