@@ -23,9 +23,10 @@ void	Harl::warning(void)
 void	Harl::complain(std::string level)
 {
 	int i = 0;
-	std::string	allLevel[] = {"DEBUG", "INFO", "WARNING", "ERROR", NULL};
+	std::string	allLevel[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 	
 	while (i < 4 && allLevel[i].compare(level)) i++;
+
 	switch (i)
 	{
 		case 0:

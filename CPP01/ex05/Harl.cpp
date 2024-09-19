@@ -21,10 +21,11 @@ void	Harl::warning(void)
 }
 void	Harl::complain(std::string level)
 {
-	void	(Harl::*fptr[])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
-	std::string	allLevel[] = {"DEBUG", "INFO", "WARNING", "ERROR", NULL};
+	int	i = 0;
+	void	(Harl::*fptr[])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error, NULL};
+	std::string	allLevel[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
-	for (int i = 0; i < 4; i++)
+	for ( ; i < 4; i++)
 		if (allLevel[i] == level)
-			fptr[i];
+			(this->*fptr[i])();
 }

@@ -5,9 +5,12 @@ int main(void)
 	std::string	input;
 	Harl		harl;
 
-	while (std::getline(std::cin, input))
-	{
+	do {
+		std::cout << "Enter level: ";
+		std::getline(std::cin, input);
 		harl.complain(input);
-	}
+		std::cout << std::endl;
+	} while(!std::cin.bad() && !std::cin.eof());
+
 	return (0);
 }

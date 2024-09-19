@@ -2,9 +2,12 @@
 
 int	main(int argc, char *argv[])
 {
-	if (argc != 3)
+	if (argc != 4)
+	{
+		std::cout << "./writefile [filename] [string1] [string2]" << std::endl;
 		return (1);
-	
+	}
+
 	MyFile input(argv[1], true);
 	MyFile output(argv[1], false);
 
@@ -22,21 +25,24 @@ int	main(int argc, char *argv[])
 	std::string				inputString;
 	std::string				result;
 	std::string				s1 = argv[2];
-	std::string::size_type	pos = 0;
+	std::string				s2 = argv[3];
+	std::string::size_type	pos;
 	std::string::size_type	found;
 
 	while (std::getline(input.input, inputString))
 	{
 		found = inputString.find(s1);
+		pos = 0;
 		while (found != std::string::npos)
 		{
-			result = inputString.substr(pos, found - pos);
-			result.append(argv[3]);
+			result += inputString.substr(pos, found - pos);
+			result.append(s2);
 			pos = found + s1.length();
 			found = inputString.find(s1, pos);
 		}
+		result.append(inputString.substr(pos));
 		output.output << result << std::endl;
+		result.clear();
 	}
-//	input.input.eof();
 	return (0);
 }
