@@ -4,7 +4,7 @@ int	main(int argc, char *argv[])
 {
 	if (argc != 3)
 		return (1);
-
+	
 	MyFile input(argv[1], true);
 	MyFile output(argv[1], false);
 
