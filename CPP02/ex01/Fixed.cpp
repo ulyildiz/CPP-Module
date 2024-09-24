@@ -8,18 +8,20 @@ Fixed::Fixed(void) : _value(0)
 
 Fixed::Fixed(const int &value)
 {
+	std::cout << "Int constructor called." << std::endl;
 	this->_value = value << this->_bits;
 }
 
 Fixed::Fixed(const float &value)
 {
-	this->_value = std::roundf(value * (1 << this->_bits));
+	std::cout << "Float constructor called." << std::endl;
+	this->_value = roundf(value * (1 << this->_bits));
 }
 
 Fixed::Fixed(const Fixed &coppied)
 {
 	std::cout << "Copy constructor called." << std::endl;
-	*this = coppied;
+	this->_value = coppied.getRawBits();
 }
 
 Fixed::~Fixed(void)
@@ -57,7 +59,7 @@ void	Fixed::setRawBits(int const &raw)
 
 std::ostream&	operator<<(std::ostream &a, const Fixed &other)
 {
-	std::cout << "Overloaded insertion operator called." << std::endl;
+//	std::cout << "Overloaded insertion operator called." << std::endl;
 	a << other.toFloat();
 	return (a);
 }

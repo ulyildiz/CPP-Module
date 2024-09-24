@@ -13,13 +13,13 @@ Fixed::Fixed(const int &value)
 
 Fixed::Fixed(const float &value)
 {
-	this->_value = std::roundf(value * (1 << this->_bits));
+	this->_value = roundf(value * (1 << this->_bits));
 }
 
 Fixed::Fixed(const Fixed &coppied)
 {
 	std::cout << "Copy constructor called." << std::endl;
-	*this = coppied;
+	this->_value = coppied.getRawBits();
 }
 
 Fixed::~Fixed(void)
@@ -47,6 +47,34 @@ void	Fixed::setRawBits(int const &raw)
 	this->_value = raw;
 }
 
+const Fixed& Fixed::min(const Fixed &a, const Fixed &b)
+{
+	if (a.getRawBits() < b.getRawBits())
+		return a;
+	return b;
+}
+
+const Fixed& Fixed::max(const Fixed &a, const Fixed &b)
+{
+	if (a.getRawBits() >= b.getRawBits())
+		return a;
+	return b;
+}
+
+Fixed& Fixed::min(Fixed &a, Fixed &b)
+{
+	if (a.getRawBits() < b.getRawBits())
+		return a;
+	return b;
+}
+
+Fixed& Fixed::max(Fixed &a, Fixed &b)
+{
+	if (a.getRawBits() >= b.getRawBits())
+		return a;
+	return b;
+}
+
 Fixed& Fixed::operator=(const Fixed& other)
 {
 	std::cout << "Overloaded copy assignment operator called." << std::endl;
@@ -70,14 +98,14 @@ Fixed&	Fixed::operator--(void)
 Fixed	Fixed::operator++(int)//düzgün çalışıcak mı?
 {
 	Fixed	tmp = *this;
-	tmp++;
+	this->_value++;
 	return (tmp);
 }
 
 Fixed	Fixed::operator--(int)
 {
-	Fixed	tmp = *this;
-	tmp++;
+	Fixed	tmp(*this);
+	this->_value--;
 	return (tmp);
 }
 
