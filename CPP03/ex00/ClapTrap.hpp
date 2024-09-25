@@ -11,6 +11,7 @@ class ClapTrap
 		unsigned int	_energyPoint;
 		unsigned int	_attackDamage;
 	public:
+		ClapTrap(void);
 		ClapTrap(const std::string& name);
 		ClapTrap(const ClapTrap& coppied);
 		~ClapTrap(void);
