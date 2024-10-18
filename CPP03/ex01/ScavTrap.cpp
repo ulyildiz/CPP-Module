@@ -19,6 +19,7 @@ ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name)
 ScavTrap::ScavTrap(const ScavTrap& coppied): ClapTrap(coppied)
 {
 	std::cout << "ScavTrap Copy Constructor" << std::endl;
+	*this = coppied;
 }
 
 ScavTrap::~ScavTrap(void)

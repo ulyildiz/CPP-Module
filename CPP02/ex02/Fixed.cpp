@@ -19,7 +19,7 @@ Fixed::Fixed(const float &value)
 Fixed::Fixed(const Fixed &coppied)
 {
 	std::cout << "Copy constructor called." << std::endl;
-	this->_value = coppied.getRawBits();
+	*this = coppied;
 }
 
 Fixed::~Fixed(void)

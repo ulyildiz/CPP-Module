@@ -20,11 +20,8 @@ ClapTrap::ClapTrap(const std::string& name)
 
 ClapTrap::ClapTrap(const ClapTrap& coppied)
 {
-	std::cout << "ClapTrap Copy Constructor" << std::endl;
-	this->_name = coppied.getName();
-	this->_attackDamage = coppied.getAttackDamage();
-	this->_energyPoint = coppied.getEnergyPoint();
-	this->_hitPoint = coppied.getHitPoint();
+	std::cout << "Claptrap Copy Constructor." << std::endl;
+	*this = coppied;
 }
 
 ClapTrap::~ClapTrap(void)

@@ -19,9 +19,7 @@ FragTrap::FragTrap(const std::string& name): ClapTrap(name)
 FragTrap::FragTrap(const FragTrap& coppied): ClapTrap(coppied)
 {
 	std::cout << "FragTrap Copy Constructor" << std::endl;
-	this->_hitPoint = 100;
-	this->_energyPoint = 100;
-	this->_attackDamage = 30;
+	*this = coppied;
 }
 
 FragTrap::~FragTrap(void)
