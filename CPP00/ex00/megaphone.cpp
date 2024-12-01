@@ -1,12 +1,12 @@
 #include <iostream>
-#include <cctype>
 
 int main(int argc, char *argv[])
 {
-	if (argc == 2)
+	if (argc >= 2)
 	{
-		for (int i = 0; argv[1][i]; i++)
-			std::cout << (char)toupper(argv[1][i]);
+		for (int j = 1; argv[j]; j++)
+			for (int i = 0; argv[j][i]; i++)
+				std::cout << (char)toupper(argv[j][i]);
 		std::cout << std::endl;
 	}
 	else

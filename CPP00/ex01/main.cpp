@@ -18,7 +18,7 @@ int	main(int argc, char *argv[])
 			if (!phone_book.addContact())
 				break ;
 		}
-		else if (input == "SEARCH")	
+		else if (input == "SEARCH")
 		{
 			if (!phone_book.searchContact())
 				break ;

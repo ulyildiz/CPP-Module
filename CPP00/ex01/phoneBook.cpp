@@ -58,7 +58,7 @@ bool	PhoneBook::searchContact(void)
 			break ;
 		else if (!checkAllDigit(input) || !checkForPrint(input))
 		{
-			std::cout << "Index must consist of digits." << std::endl;
+			std::cout << "Index must consist of digits. (Press ENTER to leave)" << std::endl;
 			input.clear();
 			continue ;
 		}

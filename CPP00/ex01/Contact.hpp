@@ -11,6 +11,7 @@ class Contact {
 		std::string	_nickname;
 		std::string	_phoneNumber;
 		std::string	_darkestSecret;
+
 	public:
 		int		check(void);
 		bool	fillContact(int index);
