@@ -10,12 +10,10 @@ class HumanB {
 
 	public:
 		HumanB(std::string name);
-		HumanB(std::string name, Weapon &gun);
-		//~HumanB();
+		//HumanB(std::string name, Weapon &gun);
+
 		void	setWeapon(Weapon &gun);
 		void	attack(void);
-
-
 };
 
 #endif

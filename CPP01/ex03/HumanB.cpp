@@ -3,15 +3,16 @@
 HumanB::HumanB(std::string name)
 {
 	this->_name = name;
+	this->_gun = NULL;
 	std::cout << name << " born without any weapon" << std::endl;
 }
 
-HumanB::HumanB(std::string name, Weapon &gun)
+/* HumanB::HumanB(std::string name, Weapon &gun)
 {
 	this->_name = name;
 	this->_gun = &gun;
 	std::cout << name << " born with a/an " << this->_gun->getType() << std::endl; 
-}
+} */
 
 void	HumanB::setWeapon(Weapon &gun)
 {

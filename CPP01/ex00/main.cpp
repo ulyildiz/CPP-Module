@@ -15,9 +15,14 @@ int main(void)
 	
 	b = newZombie("Ahsoka");
 	{
+		std::cout << "First line in second scope." << std::endl;
 		Zombie*	d = newZombie("Obi-wan");
 		delete d;
 	}
+	std::cout << "Second scope done." << std::endl;
 	delete b;
+
+	randomChump("Anakin");
+	std::cout << "Random chump done." << std::endl;
 	return (0);
 }
