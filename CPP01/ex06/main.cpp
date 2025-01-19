@@ -3,7 +3,6 @@
 int main(int argc, char *argv[])
 {
 	Harl	harl;
-	(void)argv;
 
 	if (argc != 2)
 	{

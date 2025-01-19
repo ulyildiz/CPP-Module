@@ -32,13 +32,13 @@ bool	MyFile::MyFileOpen(void)
 {
 	if (this->_in_out)
 	{
-		this->input.open(this->_fileName);
+		this->input.open(this->_fileName.c_str(), std::ifstream::in);
 		if (!this->input.is_open())
 			return (false);
 	}
 	else
 	{
-		this->output.open(this->_fileName);
+		this->output.open(this->_fileName.c_str(), std::ifstream::out);
 		if (!this->output.is_open())
 			return (false);
 	}

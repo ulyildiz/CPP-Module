@@ -1,18 +1,9 @@
 #include "HumanB.hpp"
 
-HumanB::HumanB(std::string name)
+HumanB::HumanB(std::string name) : _name(name), _gun(NULL)
 {
-	this->_name = name;
-	this->_gun = NULL;
 	std::cout << name << " born without any weapon" << std::endl;
 }
-
-/* HumanB::HumanB(std::string name, Weapon &gun)
-{
-	this->_name = name;
-	this->_gun = &gun;
-	std::cout << name << " born with a/an " << this->_gun->getType() << std::endl; 
-} */
 
 void	HumanB::setWeapon(Weapon &gun)
 {
@@ -22,5 +13,8 @@ void	HumanB::setWeapon(Weapon &gun)
 
 void	HumanB::attack(void)
 {
-	std::cout << this->_name << " attacks with their " << this->_gun->getType() << std::endl;
+	if (this->_gun == NULL)
+		std::cout << this->_name << " can't attack without any weapon" << std::endl;
+	else
+		std::cout << this->_name << " attacks with their " << this->_gun->getType() << std::endl;
 }
