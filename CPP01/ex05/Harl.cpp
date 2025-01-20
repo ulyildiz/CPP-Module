@@ -19,6 +19,7 @@ void	Harl::warning(void)
 {
 	std::cout << "[WARNING]\nI think I deserve to have some extra bacon for free.\nI’ve been coming for years whereas you started working here since last month." << std::endl;
 }
+
 void	Harl::complain(std::string level)
 {
 	void	(Harl::*fptr[])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error, NULL};
@@ -26,5 +27,5 @@ void	Harl::complain(std::string level)
 
 	for (int i = 0; i < 4; i++)
 		if (allLevel[i] == level)
-			(this->*fptr[i])();
+			return ((this->*fptr[i])());
 }

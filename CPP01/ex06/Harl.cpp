@@ -26,7 +26,7 @@ void	Harl::warning(void)
 void	Harl::complain(std::string level)
 {
 	std::string	allLevel[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
-	void		(Harl:: *f[4])(void) = { &Harl::debug, &Harl::info, &Harl::warning, &Harl::error, NULL};
+	void		(Harl:: *f[])(void) = { &Harl::debug, &Harl::info, &Harl::warning, &Harl::error, NULL};
 	int i = 0;
 
 	while (i < 4 && allLevel[i] != level) i++;

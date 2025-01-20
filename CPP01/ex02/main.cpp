@@ -2,7 +2,7 @@
 
 int main(void)
 {
-	std::string message = "HI THIS IS BRAIN";
+ 	std::string message = "HI THIS IS BRAIN";
 	std::string &stringREF = message;
 	std::string *stringPTR = &message;
 
@@ -15,7 +15,7 @@ int main(void)
 	std::cout << "Value of 'stringREF' -> " << stringREF << std::endl;
 	std::cout << "Value of 'stringPTR' -> " << stringPTR << std::endl;
 
-	std::cout << "Value of pointed from 'stringPTR' -> " << *stringPTR << std::endl;
-
+	std::cout << "Value that pointed from 'stringPTR' -> " << *stringPTR << std::endl;
+ 
 	return (0);
 }
