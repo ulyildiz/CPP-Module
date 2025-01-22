@@ -3,17 +3,17 @@
 FragTrap::FragTrap(void) 
 {
 	std::cout << "FragTrap Default Constructor" << std::endl;
-	this->_hitPoint = 100;
-	this->_energyPoint = 100;
-	this->_attackDamage = 30;
+	this->_hitPoint = FragTrap::_defHitPoint;
+	this->_energyPoint = FragTrap::_defEnergyPoint;
+	this->_attackDamage = FragTrap::_defAttackPoint;
 }
 
 FragTrap::FragTrap(const std::string& name): ClapTrap(name)
 {
 	std::cout << "FragTrap Constructor" << std::endl;
-	this->_hitPoint = 100;
-	this->_energyPoint = 100;
-	this->_attackDamage = 30;
+	this->_hitPoint = FragTrap::_defHitPoint;
+	this->_energyPoint = FragTrap::_defEnergyPoint;
+	this->_attackDamage = FragTrap::_defAttackPoint;
 }
 
 FragTrap::FragTrap(const FragTrap& coppied): ClapTrap(coppied)
@@ -33,6 +33,17 @@ void	FragTrap::highFivesGuys(void)
 		std::cout << this->getName() << " wants you to high-fives." << std::endl;
 	else
 		std::cout << this->getName() << " kinda dead." << std::endl;
+}
+
+void	FragTrap::attack(const std::string& target)
+{
+	if (this->_hitPoint > 0 && this->_energyPoint > 0)
+	{	
+		std::cout << "FragTrap " + this->_name + " attacks " + target + ", causing " << this->_attackDamage << " points of damage!" << std::endl;
+		this->_energyPoint--;
+	}
+	else
+		std::cout << "FragTrap " + this->_name + " is incapable of doing anything." << std::endl;
 }
 
 FragTrap&	FragTrap::operator=(const FragTrap& other)

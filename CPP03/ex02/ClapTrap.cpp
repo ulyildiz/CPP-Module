@@ -1,21 +1,15 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void)
+ClapTrap::ClapTrap(void): _name(""), _attackDamage(ClapTrap::_defAttackDamage),
+ _energyPoint(ClapTrap::_defEnergyPoint), _hitPoint(ClapTrap::_defHitpoint)
 {
-	std::cout << "ClapTrap Default Constructor" << std::endl;
-	this->_name = "";
-	this->_attackDamage = 0;
-	this->_energyPoint = 10;
-	this->_hitPoint = 10;
+	std::cout << "Default Constructor" << std::endl;
 }
 
-ClapTrap::ClapTrap(const std::string& name)
+ClapTrap::ClapTrap(const std::string& name): _name(name), _attackDamage(ClapTrap::_defAttackDamage),
+ _energyPoint(ClapTrap::_defEnergyPoint), _hitPoint(ClapTrap::_defHitpoint)
 {
-	std::cout << "ClapTrap Constructor" << std::endl;
-	this->_name = name;
-	this->_attackDamage = 0;
-	this->_energyPoint = 10;
-	this->_hitPoint = 10;
+	std::cout << "Constructor" << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& coppied)
@@ -26,7 +20,7 @@ ClapTrap::ClapTrap(const ClapTrap& coppied)
 
 ClapTrap::~ClapTrap(void)
 {
-	std::cout << "ClapTrap Destructor" << std::endl;
+	std::cout << "Destructor" << std::endl;
 }
 
 std::string	ClapTrap::getName(void) const
@@ -68,10 +62,10 @@ void	ClapTrap::takeDamage(unsigned int amount)
 			this->_hitPoint = 0;
 		else
 			this->_hitPoint -= amount;
-		std::cout << this->_name + " took " << amount << " damage." << std::endl;
+		std::cout << "ClapTrap" + this->_name + " took " << amount << " damage." << std::endl;
 	}
 	else
-		std::cout << this->_name + "already dead." << std::endl;		
+		std::cout << "ClapTrap" + this->_name + "already dead." << std::endl;		
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)

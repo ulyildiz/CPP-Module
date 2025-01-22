@@ -1,19 +1,19 @@
 #include "ScavTrap.hpp"
 
-ScavTrap::ScavTrap(void)
+ScavTrap::ScavTrap(void): ClapTrap()
 {
-	this->_energyPoint = 50;
-	this->_attackDamage = 20;
-	this->_hitPoint = 100;
+	this->_hitPoint = ScavTrap::_defHitPoint;
+	this->_attackDamage = ScavTrap::_defAttackPoint;
+	this->_energyPoint = ScavTrap::_defEnergyPoint;
 	std::cout << "ScavTrap Default Constructor" << std::endl;
 }
 
 ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name)
 {
 	std::cout << "ScavTrap Constructor" << std::endl;
-	this->_energyPoint = 50;
-	this->_attackDamage = 20;
-	this->_hitPoint = 100;
+	this->_hitPoint = ScavTrap::_defHitPoint;
+	this->_attackDamage = ScavTrap::_defAttackPoint;
+	this->_energyPoint = ScavTrap::_defEnergyPoint;
 }
 
 ScavTrap::ScavTrap(const ScavTrap& coppied): ClapTrap(coppied)
