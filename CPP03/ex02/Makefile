@@ -1,7 +1,8 @@
 NAME = fragtrap
 SRC =	ClapTrap.cpp \
 		main.cpp \
-		ScavTrap.cpp
+		ScavTrap.cpp \
+		FragTrap.cpp
 OBJ = $(SRC:.cpp=.o)
 FLAGS = -Wall -Wextra -Werror -std=c++98
 

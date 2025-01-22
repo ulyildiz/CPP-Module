@@ -1,15 +1,19 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(void): _name(""), _attackDamage(ClapTrap::_defAttackDamage),
- _energyPoint(ClapTrap::_defEnergyPoint), _hitPoint(ClapTrap::_defHitpoint)
+ClapTrap::ClapTrap(void): _name("")
 {
-	std::cout << "Default Constructor" << std::endl;
+	this->_attackDamage = ClapTrap::_defAttackDamage;
+	this->_energyPoint = ClapTrap::_defEnergyPoint;
+	this->_hitPoint = ClapTrap::_defHitpoint;
+	std::cout << "ClapTrap Default Constructor" << std::endl;
 }
 
-ClapTrap::ClapTrap(const std::string& name): _name(name), _attackDamage(ClapTrap::_defAttackDamage),
- _energyPoint(ClapTrap::_defEnergyPoint), _hitPoint(ClapTrap::_defHitpoint)
+ClapTrap::ClapTrap(const std::string& name): _name(name)
 {
-	std::cout << "Constructor" << std::endl;
+	this->_attackDamage = ClapTrap::_defAttackDamage;
+	this->_energyPoint = ClapTrap::_defEnergyPoint;
+	this->_hitPoint = ClapTrap::_defHitpoint;
+	std::cout << "ClapTrap Constructor" << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& coppied)
@@ -20,7 +24,7 @@ ClapTrap::ClapTrap(const ClapTrap& coppied)
 
 ClapTrap::~ClapTrap(void)
 {
-	std::cout << "Destructor" << std::endl;
+	std::cout << "Claptrap Destructor" << std::endl;
 }
 
 std::string	ClapTrap::getName(void) const
@@ -48,10 +52,10 @@ void	ClapTrap::attack(const std::string& target)
 	if (this->_hitPoint > 0 && this->_energyPoint > 0)
 	{	
 		this->_energyPoint--;
-		std::cout << "ClapTrap " + this->_name + " attacks " + target + ", causing " << this->_attackDamage << " points of damage!" << std::endl;
+		std::cout << "ClapTrap " << this->_name << " attacks " << target << ", causing " << this->_attackDamage << " points of damage!" << std::endl;
 	}
 	else
-		std::cout << "ClapTrap " + this->_name + " is incapable of doing anything." << std::endl;
+		std::cout << "ClapTrap " << this->_name << " is incapable of doing anything." << std::endl;
 }
 
 void	ClapTrap::takeDamage(unsigned int amount)
@@ -62,10 +66,10 @@ void	ClapTrap::takeDamage(unsigned int amount)
 			this->_hitPoint = 0;
 		else
 			this->_hitPoint -= amount;
-		std::cout << "ClapTrap" + this->_name + " took " << amount << " damage." << std::endl;
+		std::cout << "ClapTrap" << this->_name << " took " << amount << " damage." << std::endl;
 	}
 	else
-		std::cout << "ClapTrap" + this->_name + "already dead." << std::endl;		
+		std::cout << "ClapTrap" << this->_name << "already dead." << std::endl;		
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)
@@ -74,10 +78,10 @@ void	ClapTrap::beRepaired(unsigned int amount)
 	{
 		this->_energyPoint--;
 		this->_hitPoint += amount;
-		std::cout << "ClapTrap " + this->_name + " repairs itself " << amount << " hit point(s)." << std::endl;
+		std::cout << "ClapTrap " << this->_name << " repairs itself " << amount << " hit point(s)." << std::endl;
 	}
 	else
-		std::cout << "ClapTrap " + this->_name + " is incapable of doing anything." << std::endl;
+		std::cout << "ClapTrap " << this->_name << " is incapable of doing anything." << std::endl;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& other)
