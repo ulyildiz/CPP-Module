@@ -66,10 +66,10 @@ void	ClapTrap::takeDamage(unsigned int amount)
 			this->_hitPoint = 0;
 		else
 			this->_hitPoint -= amount;
-		std::cout << "ClapTrap" << this->_name << " took " << amount << " damage." << std::endl;
+		std::cout << "ClapTrap " << this->_name << " took " << amount << " damage." << std::endl;
 	}
 	else
-		std::cout << "ClapTrap" << this->_name << "already dead." << std::endl;		
+		std::cout << "ClapTrap " << this->_name << "already dead." << std::endl;		
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)

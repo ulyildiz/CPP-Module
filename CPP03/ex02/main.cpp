@@ -2,7 +2,7 @@
 
 int main()
 {
-    FragTrap a;
+    FragTrap a("FragBoy");
 
 	std::cout << "Name: " << a.getName() << std::endl;
 	std::cout << "Hit Point: " << a.getHitPoint() << std::endl;
@@ -10,7 +10,7 @@ int main()
 	std::cout << "Attack Damage: " << a.getAttackDamage() << std::endl;
 
     {
-        FragTrap b;
+        FragTrap b("FragMan");
 
         b.highFivesGuys();
         a.attack(b.getName());
