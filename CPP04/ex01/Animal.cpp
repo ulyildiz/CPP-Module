@@ -1,9 +1,9 @@
 #include "Animal.hpp"
 
-Animal::Animal(void)
+Animal::Animal(void): _type("Unknown animal")
 {
 	std::cout << "Animal constructor." << std::endl;
-	this->type = "Animal";
+	this->_type = "Animal";
 }
 
 Animal::Animal(const Animal& coppied)
@@ -19,7 +19,7 @@ Animal::~Animal(void)
 
 const std::string&	Animal::getType(void) const
 {
-	return (this->type);
+	return (this->_type);
 }
 
 void	Animal::makeSound(void) const
@@ -29,7 +29,9 @@ void	Animal::makeSound(void) const
 
 Animal&	Animal::operator=(const Animal& other)
 {
-	this->type = other.getType();
+	std::cout << "Animal assignment operator." << std::endl;
+	if (this != &other)
+		this->_type = other.getType();
 	return (*this);
 }
 

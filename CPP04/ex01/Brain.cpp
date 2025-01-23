@@ -34,7 +34,11 @@ std::string Brain::getIdea(int index) const
 
 Brain&	Brain::operator=(const Brain& other)
 {
-	for (int i = 0; i < 100; i++)
-		this->ideas[i] = other.ideas[i];
+	std::cout << "Brain assignment operator." << std::endl;
+	if (this != &other)
+	{
+		for (int i = 0; i < 100; i++)
+			this->ideas[i] = other.ideas[i];
+	}
 	return (*this);
 }

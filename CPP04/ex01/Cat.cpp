@@ -3,7 +3,7 @@
 Cat::Cat(void): Animal(), _brain(new Brain())
 {
 	std::cout << "Cat constructor." << std::endl;
-	this->type = "Cat";
+	this->_type = "Cat";
 }
 
 Cat::Cat(const Cat& coppied): Animal(coppied), _brain(new Brain())
@@ -30,12 +30,10 @@ Brain*	Cat::getBrain(void) const
 
 Cat&	Cat::operator=(const Cat& other)
 {
+	std::cout << "Cat assignment operator." << std::endl;
 	if (this != &other)
 	{
-		this->type = other.getType();
-/* 		if (this->_brain != NULL)
-			delete this->_brain;
-		t */
+		this->_type = other.getType();
 		for(int i = 1; i < 101; i++)
 			this->_brain->setIdea(other._brain->getIdea(i), i);
 	}

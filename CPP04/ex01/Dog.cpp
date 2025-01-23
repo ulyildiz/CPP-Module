@@ -3,7 +3,7 @@
 Dog::Dog(void): Animal(), _brain(new Brain())
 {
 	std::cout << "Dog constructor." << std::endl;
-	this->type = "Dog";
+	this->_type = "Dog";
 }
 
 Dog::Dog(const Dog& coppied): Animal(coppied), _brain(new Brain())
@@ -30,9 +30,10 @@ Brain*	Dog::getBrain(void) const
 
 Dog&	Dog::operator=(const Dog& other)
 {
+	std::cout << "Dog assignment operator." << std::endl;
 	if (this != &other)
 	{
-		this->type = other.getType();
+		this->_type = other.getType();
 		for(int i = 1; i < 101; i++)
 			this->_brain->setIdea(other._brain->getIdea(i), i);
 	}

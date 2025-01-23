@@ -1,9 +1,9 @@
 #include "AAnimal.hpp"
 
-AAnimal::AAnimal(void)
+AAnimal::AAnimal(void): _type("Unknown animal")
 {
 	std::cout << "AAnimal constructor." << std::endl;
-	this->type = "AAnimal";
+	this->_type = "AAnimal";
 }
 
 AAnimal::AAnimal(const AAnimal& coppied)
@@ -19,17 +19,14 @@ AAnimal::~AAnimal(void)
 
 const std::string&	AAnimal::getType(void) const
 {
-	return (this->type);
+	return (this->_type);
 }
 
-/* void	AAnimal::makeSound(void) const
-{
-	std::cout << "Some kind of Aanimal noises." << std::endl;
-}
- */
 AAnimal&	AAnimal::operator=(const AAnimal& other)
 {
-	this->type = other.getType();
+	std::cout << "AAnimal assignment operator." << std::endl;
+	if (this != &other)
+		this->_type = other.getType();
 	return (*this);
 }
 

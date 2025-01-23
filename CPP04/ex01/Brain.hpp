@@ -13,8 +13,8 @@ class Brain
 		Brain(const Brain& coppied);
 		~Brain(void);
 
-		void				setIdea(const std::string& idea, int index);
-		std::string 	getIdea(int index) const;
+		void		setIdea(const std::string& idea, int index);
+		std::string	getIdea(int index) const;
 
 		Brain&	operator=(const Brain& other);
 };
