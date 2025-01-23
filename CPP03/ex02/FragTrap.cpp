@@ -1,6 +1,6 @@
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap(void) 
+FragTrap::FragTrap(void): ClapTrap() 
 {
 	std::cout << "FragTrap Default Constructor" << std::endl;
 	this->_hitPoint = FragTrap::_defHitPoint;

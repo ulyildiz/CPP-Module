@@ -32,18 +32,18 @@ void	ScavTrap::attack(const std::string& target)
 	if (this->_hitPoint > 0 && this->_energyPoint > 0)
 	{	
 		this->_energyPoint--;
-		std::cout << "ScavTrap " + this->_name + " attacks " + target + ", causing " << this->_attackDamage << " points of damage!" << std::endl;
+		std::cout << "ScavTrap " << this->_name << " attacks " << target << ", causing " << this->_attackDamage << " points of damage!" << std::endl;
 	}
 	else
-		std::cout << "ScavTrap " + this->_name + " is incapable of doing anything." << std::endl;
+		std::cout << "ScavTrap " << this->_name << " is incapable of doing anything." << std::endl;
 }
 
 void	ScavTrap::guardGate(void)
 {
 	if (this->_hitPoint > 0 && this->_energyPoint > 0)
-		std::cout << "ScavTrap " + this->_name + " is in Gatekeeper mode." << std::endl;
+		std::cout << "ScavTrap " << this->_name << " is in Gatekeeper mode." << std::endl;
 	else
-		std::cout << "ScavTrap " + this->_name + " is incapable of doing anything." << std::endl;
+		std::cout << "ScavTrap " << this->_name << " is incapable of doing anything." << std::endl;
 }
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& other)
