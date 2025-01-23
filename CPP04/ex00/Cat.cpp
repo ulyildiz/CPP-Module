@@ -3,7 +3,7 @@
 Cat::Cat(void): Animal()
 {
 	std::cout << "Cat constructor." << std::endl;
-	this->type = "Cat";
+	this->_type = "Cat";
 }
 
 Cat::Cat(const Cat& coppied): Animal(coppied)
@@ -24,6 +24,8 @@ void	Cat::makeSound(void) const
 
 Cat&	Cat::operator=(const Cat& other)
 {
-	this->type = other.getType();
+	std::cout << "Cat operator assignment." << std::endl;
+	if (this != &other)
+		this->_type = other.getType();
 	return (*this);
 }

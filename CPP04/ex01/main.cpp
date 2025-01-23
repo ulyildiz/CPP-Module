@@ -15,13 +15,21 @@ int main(void)
 	}
 
 	for (int i = 0; i < maxAnimal; i++)
-		animal[i]->makeSound();
-	
-	/*
-		use idea variable for example
-	*/
+		animal[i]->makeSound();	
 
 	for (int i = 0; i < maxAnimal; i++)
 		delete animal[i];
-	return (0);	
+
+	Cat a;
+
+	for (int i = 1; i < 101; i++)
+		(*a.getBrain()).setIdea("Cat_a Ideas", i);
+	for (int i = 1; i < 101; i++)
+		std::cout << (*a.getBrain()).getIdea(i) << " " << i << std::endl;
+
+	{
+		Cat c = a;
+	}
+	
+	return (0);
 }

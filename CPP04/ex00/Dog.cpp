@@ -3,7 +3,7 @@
 Dog::Dog(void): Animal()
 {
 	std::cout << "Dog constructor." << std::endl;
-	this->type = "Dog";
+	this->_type = "Dog";
 }
 
 Dog::Dog(const Dog& coppied): Animal(coppied)
@@ -24,6 +24,8 @@ void	Dog::makeSound(void) const
 
 Dog&	Dog::operator=(const Dog& other)
 {
-	this->type = other.getType();
+	std::cout << "Dog operator assignment." << std::endl;
+	if (this != &other)
+		this->_type = other.getType();
 	return (*this);
 }
