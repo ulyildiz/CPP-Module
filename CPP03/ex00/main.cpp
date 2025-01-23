@@ -4,10 +4,10 @@ int	main(void)
 {
 	ClapTrap a("ClapBoy");
 
-	std::cout << "Name: " + a.getName() << std::endl;
-	std::cout << "Hit Point: " + a.getHitPoint() << std::endl;
-	std::cout << "Energy Point: " + a.getEnergyPoint() << std::endl;
-	std::cout << "Attack Damage: " + a.getAttackDamage() << std::endl;
+	std::cout << "Name: " << a.getName() << std::endl;
+	std::cout << "Hit Point: " << a.getHitPoint() << std::endl;
+	std::cout << "Energy Point: " << a.getEnergyPoint() << std::endl;
+	std::cout << "Attack Damage: " << a.getAttackDamage() << std::endl;
 
 	{
 		ClapTrap b("ClapMan");
