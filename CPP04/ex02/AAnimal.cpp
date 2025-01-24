@@ -29,4 +29,3 @@ AAnimal&	AAnimal::operator=(const AAnimal& other)
 		this->_type = other.getType();
 	return (*this);
 }
-

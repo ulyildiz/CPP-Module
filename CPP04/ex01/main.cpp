@@ -19,17 +19,39 @@ int main(void)
 
 	for (int i = 0; i < maxAnimal; i++)
 		delete animal[i];
+	
+	{
+		Cat *a = new Cat();
 
-	Cat a;
+		for (int i = 1; i < 101; i++)
+			(*(*a).getBrain()).setIdea("Cat_a Ideas", i);
+		for (int i = 1; i < 101; i++)
+			std::cout << (*(*a).getBrain()).getIdea(i) << " " << i << std::endl;
 
-	for (int i = 1; i < 101; i++)
-		(*a.getBrain()).setIdea("Cat_a Ideas", i);
-	for (int i = 1; i < 101; i++)
-		std::cout << (*a.getBrain()).getIdea(i) << " " << i << std::endl;
+		{
+			Cat c(*a);
+		}
+	}
 
 	{
-		Cat c = a;
-	}
-	
+		Dog a;
+
+		for (int i = 1; i < 101; i++)
+			(*a.getBrain()).setIdea("Dog_a Ideas", i);
+		for (int i = 1; i < 101; i++)
+			std::cout << (*a.getBrain()).getIdea(i) << " " << i << std::endl;
+
+		{
+			Dog c = a;
+			for (int i = 1; i < 101; i++)
+				(*a.getBrain()).setIdea("Dog_A Ideas", i);
+			for (int i = 1; i < 101; i++)
+			{
+				std::cout << "Dog a-> " << (*a.getBrain()).getIdea(i) << " " << i << std::endl;
+				std::cout << "Dog c-> " << (*c.getBrain()).getIdea(i) << " " << i << std::endl;
+			}
+		}
+	} 
+
 	return (0);
 }

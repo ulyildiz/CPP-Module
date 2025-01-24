@@ -19,6 +19,4 @@ class Brain
 		Brain&	operator=(const Brain& other);
 };
 
-
-
 #endif

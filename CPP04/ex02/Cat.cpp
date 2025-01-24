@@ -33,9 +33,10 @@ Cat&	Cat::operator=(const Cat& other)
 	std::cout << "Dog assignment operator." << std::endl;
 	if (this != &other)
 	{
+		if (this->_brain != NULL)
+			delete this->_brain;
+		this->_brain = new Brain(*(other.getBrain()));
 		this->_type = other.getType();
-		for(int i = 1; i < 101; i++)
-			this->_brain->setIdea(other._brain->getIdea(i), i);
 	}
 	return (*this);
 }
