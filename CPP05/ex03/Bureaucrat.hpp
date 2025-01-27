@@ -2,6 +2,9 @@
 # define BUREAUCRAT_HPP
 
 # include <iostream> 
+# include "AForm.hpp"
+
+class AForm;
 
 class Bureaucrat {
 	private:
@@ -9,7 +12,6 @@ class Bureaucrat {
 		int					_grade;
 		static const int	_highestGrade = 1;
 		static const int	_lowestGrade = 150;
-
 	public:
 		Bureaucrat(void);
 		Bureaucrat(const Bureaucrat& coppied);
@@ -21,9 +23,11 @@ class Bureaucrat {
 		const int&			getGrade(void) const;
 /* 		const int&			getHighestGrade(void) const;
 		const int&			getLowestGrade(void) const; */
-
 		void				incrementGrade(void);
 		void				decrementGrade(void);
+
+		void				signForm(AForm& form) const;
+		void				executeForm(const AForm& form) const;
 
 		Bureaucrat&			operator=(const Bureaucrat& other);
 
@@ -31,7 +35,6 @@ class Bureaucrat {
 			public:
 				virtual const char* what() const throw();
 		};
-
 		class GradeTooLowException: public std::exception {
 			public:
 				virtual const char* what() const throw();

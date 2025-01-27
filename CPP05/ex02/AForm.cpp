@@ -1,0 +1,85 @@
+#include "AForm.hpp"
+
+AForm::AForm(void): _name("default"), _signed(false), _gradeToSign(1), _gradeToExecute(1)
+{
+	std::cout << "AForm default constructor." << std::endl;
+}
+
+AForm::AForm(const std::string& name, int gradeToSign, int gradeToExecute): _name(name), _signed(false), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute)
+{
+	std::cout << "AForm constructor." << std::endl;
+	if (gradeToSign < 1 || gradeToExecute < 1)
+		throw AForm::GradeTooHighException();
+	if (gradeToSign > 150 || gradeToExecute > 150)
+		throw AForm::GradeTooLowException();
+}
+
+AForm::AForm(const AForm& coppied): _name(coppied._name), _signed(coppied._signed), _gradeToSign(coppied._gradeToSign), _gradeToExecute(coppied._gradeToExecute)
+{
+	std::cout << "AForm copy constructor." << std::endl;
+}
+
+AForm::~AForm(void)
+{
+	std::cout << "AForm destructor." << std::endl;
+}
+
+void	AForm::beSigned(const Bureaucrat& bureaucrat)
+{
+	if (this->_signed)
+		throw AForm::FormAlreadySignedException();
+	else if (bureaucrat.getGrade() > this->_gradeToSign)
+		throw AForm::GradeTooLowException();
+	else if (bureaucrat.getGrade() < this->_gradeToSign)
+		throw AForm::GradeTooHighException();
+	else
+	{
+		std::cout << "AForm signed by " << bureaucrat.getName() << std::endl;
+		this->_signed = true;
+	}
+}
+
+void	AForm::execute(const Bureaucrat& executor) const
+{
+	if (!this->_signed)
+		throw AForm::FormNotSignedException();
+	else if (executor.getGrade() > this->_gradeToExecute)
+		throw AForm::GradeTooLowException();
+	else if (executor.getGrade() < this->_gradeToExecute)
+		throw AForm::GradeTooHighException();
+	else
+	{
+		std::cout << executor.getName() << " executes " << this->_name << std::endl;
+		this->executeAction();
+	}
+}
+
+const std::string&	AForm::getName(void) const { return (this->_name); }
+const bool&			AForm::getSigned(void) const { return (this->_signed); }
+const int&			AForm::getGradeToSign(void) const { return (this->_gradeToSign); }
+const int&			AForm::getGradeToExecute(void) const { return (this->_gradeToExecute); }
+
+const char* AForm::GradeTooHighException::what() const throw() { return ("Grade is too high."); }
+const char* AForm::GradeTooLowException::what() const throw() { return ("Grade is too low."); }
+const char* AForm::FormAlreadySignedException::what() const throw() { return ("Form is already signed."); }
+const char* AForm::FormNotSignedException::what() const throw() { return ("Form is not signed."); }
+
+AForm& AForm::operator=(const AForm& other)
+{
+	std::cout << "AForm assignation operator." << std::endl;
+	if (this != &other)
+		this->_signed = other._signed;
+	return (*this);
+}
+
+std::ostream& operator<<(std::ostream& out, const AForm& form)
+{
+	std::cout << "AForm insertion operator." << std::endl;
+	out << "AForm " << form.getName() << " is ";
+	if (form.getSigned())
+		out << "signed";
+	else
+		out << "not signed";
+	out << " and requires grade " << form.getGradeToSign() << " to sign and grade " << form.getGradeToExecute() << " to execute." << std::endl;
+	return (out);
+}

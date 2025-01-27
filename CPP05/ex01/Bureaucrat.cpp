@@ -1,16 +1,16 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(void): _name("White-collar")
+Bureaucrat::Bureaucrat(void) : _name("White-collar")
 {
 	std::cout << "Default constructor." << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const std::string& name): _name(name)
+Bureaucrat::Bureaucrat(const std::string& name) : _name(name)
 {
 	std::cout << "Constructor with name." << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const std::string& name, int grade): _name(name)
+Bureaucrat::Bureaucrat(const std::string& name, int grade) : _name(name)
 {
 	std::cout << "Constructor with name and grade." << std::endl;
 	if (grade < Bureaucrat::_highestGrade)
@@ -46,6 +46,19 @@ void	Bureaucrat::decrementGrade(void)
 		throw Bureaucrat::GradeTooLowException();
 	else
 		std::cout << "New grade is -> " << ++(this->_grade) << std::endl;
+}
+
+void	Bureaucrat::signForm(Form& form) const
+{
+	try
+	{
+		form.beSigned((*this));
+		std::cout << this->_name << " signs " << form.getName() << std::endl;
+	}
+	catch (const std::exception& e)
+	{
+		std::cout << this->_name << " cannot sign " << form.getName() << " because " << e.what() << std::endl;
+	}
 }
 
 const std::string& Bureaucrat::getName(void) const { return (this->_name); }
