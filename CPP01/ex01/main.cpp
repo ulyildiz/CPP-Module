@@ -6,7 +6,7 @@ Zombie*	zombieHorde(int N, std::string name);
 int main(void)
 {
 	Zombie	*aHorde;
-	int		hordeLen = 10;
+	int		hordeLen = 5;
 
 	aHorde = zombieHorde(hordeLen, "Kelvins");
 

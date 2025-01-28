@@ -4,15 +4,15 @@ SRC = 	PhoneBook.cpp \
 		main.cpp
 
 OBJ = $(SRC:.cpp=.o)
-CFLAGS = -std=c++98 -Wall -Wextra -Werror
+CPPFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	c++ $(CFLAGS) $(OBJ) -o $(NAME)
+	c++ $(CPPFLAGS) $(OBJ) -o $(NAME)
 
 %.o: %.cpp
-	c++ $(CFLAGS) -c $< -o $@
+	c++ $(CPPFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ)

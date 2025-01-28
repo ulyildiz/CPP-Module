@@ -6,7 +6,7 @@ Dog::Dog(void): Animal(), _brain(new Brain())
 	this->_type = "Dog";
 }
 
-Dog::Dog(const Dog& coppied): Animal(coppied), _brain(new Brain())
+Dog::Dog(const Dog& coppied): Animal(coppied), _brain(NULL)
 {
 	std::cout << "Dog copy constructor." << std::endl;
 	*this = coppied;
@@ -23,9 +23,9 @@ void	Dog::makeSound(void) const
 	std::cout << "Woof Woof Woof Woof" << std::endl;
 }
 
-Brain*	Dog::getBrain(void) const
+Brain&	Dog::getBrain(void) const
 {
-	return (this->_brain);
+	return (*(this->_brain));
 }
 
 Dog&	Dog::operator=(const Dog& other)
@@ -35,7 +35,7 @@ Dog&	Dog::operator=(const Dog& other)
 	{
 		if (this->_brain != NULL)
 			delete this->_brain;
-		this->_brain = new Brain(*(other.getBrain()));
+		this->_brain = new Brain(other.getBrain());
 		this->_type = other.getType();
 	}
 	return (*this);

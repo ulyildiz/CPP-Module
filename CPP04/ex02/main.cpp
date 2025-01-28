@@ -19,5 +19,8 @@ int main(void)
 	for (int i = 0; i < animalCount; i++)
 		stables[i]->makeSound();
 
+	for (int i = 0; i < animalCount; i++)
+		delete stables[i];
+
 	return (0);	
 }

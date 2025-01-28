@@ -24,31 +24,32 @@ int main(void)
 		Cat *a = new Cat();
 
 		for (int i = 1; i < 101; i++)
-			(*(*a).getBrain()).setIdea("Cat_a Ideas", i);
+			((*a).getBrain()).setIdea("Cat_a Ideas", i);
 		for (int i = 1; i < 101; i++)
-			std::cout << (*(*a).getBrain()).getIdea(i) << " " << i << std::endl;
+			std::cout << ((*a).getBrain()).getIdea(i) << " " << i << std::endl;
 
 		{
 			Cat c(*a);
 		}
+		delete a;
 	}
 
 	{
 		Dog a;
 
 		for (int i = 1; i < 101; i++)
-			(*a.getBrain()).setIdea("Dog_a Ideas", i);
+			(a.getBrain()).setIdea("Dog_a Ideas", i);
 		for (int i = 1; i < 101; i++)
-			std::cout << (*a.getBrain()).getIdea(i) << " " << i << std::endl;
+			std::cout << (a.getBrain()).getIdea(i) << " " << i << std::endl;
 
 		{
 			Dog c = a;
 			for (int i = 1; i < 101; i++)
-				(*a.getBrain()).setIdea("Dog_A Ideas", i);
+				(a.getBrain()).setIdea("Dog_A Ideas", i);
 			for (int i = 1; i < 101; i++)
 			{
-				std::cout << "Dog a-> " << (*a.getBrain()).getIdea(i) << " " << i << std::endl;
-				std::cout << "Dog c-> " << (*c.getBrain()).getIdea(i) << " " << i << std::endl;
+				std::cout << "Dog a-> " << (a.getBrain()).getIdea(i) << " " << i << std::endl;
+				std::cout << "Dog c-> " << (c.getBrain()).getIdea(i) << " " << i << std::endl;
 			}
 		}
 	} 
