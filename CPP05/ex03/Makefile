@@ -4,9 +4,10 @@ SRC =	Bureaucrat.cpp \
 		PresidentialPardonForm.cpp \
 		RobotomyRequestForm.cpp \
 		ShrubberyCreationForm.cpp \
-		main.cpp
+		main.cpp \
+		Intern.cpp
 OBJ = $(SRC:.cpp=.o)
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -g -Werror -std=c++98
 
 $(NAME): $(OBJ)
 	c++ $(FLAGS) $(OBJ) -o $(NAME)

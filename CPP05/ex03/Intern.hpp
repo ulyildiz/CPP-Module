@@ -8,14 +8,11 @@
 class Intern {
 	private:
 		static const int _formCount = 3; 
-		struct FormType {
+		typedef struct FormType {
 			std::string	formName;
 			AForm*		(*formCreation)(const std::string& target);
-		} _formTypes[3] = {
-			{"shrubbery creation", &ShrubberyCreationForm::createForm},
-			{"robotomy request", &RobotomyRequestForm::createForm},
-			{"presidential pardon", &PresidentialPardonForm::createForm}
-		};
+		} t_formType;
+		t_formType _formTypes[3];
 	public:
 		Intern(void);
 		Intern(const Intern& coppied);

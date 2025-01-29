@@ -10,8 +10,8 @@ class AForm {
 	private:
 		const std::string	_name;
 		bool				_signed;
-		const int			_gradeToSign;
-		const int			_gradeToExecute;
+		int					_gradeToSign;
+		int					_gradeToExecute;
 	public:
 		AForm(void);
 		AForm(const std::string& name, int gradeToSign, int gradeToExecute);
@@ -40,6 +40,10 @@ class AForm {
 				virtual const char* what() const throw();
 		};
 		class FormNotSignedException: public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+		class NoFormException: public std::exception {
 			public:
 				virtual const char* what() const throw();
 		};

@@ -1,4 +1,5 @@
 #include "ShrubberyCreationForm.hpp"
+#include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm(void): AForm("ShrubberyCreationForm", ShrubberyCreationForm::_gradeToSign, ShrubberyCreationForm::_gradeToExecute), _target("default")
 {
@@ -25,8 +26,9 @@ AForm*	ShrubberyCreationForm::createForm(const std::string& target) { return (ne
 
 void	ShrubberyCreationForm::executeAction(void) const
 {
-	std::ofstream	outputFile((this->_target + "_shrubbery").c_str(), std::ios::out | std::ios::trunc | std::ios::app);
+	std::ofstream	outputFile;
 
+	outputFile.open((this->_target + "_shrubbery").c_str(), std::ofstream::out | std::ofstream::trunc);
 	if (!outputFile.is_open())
 		throw std::ofstream::failure("Error: could not open file.");
 	else

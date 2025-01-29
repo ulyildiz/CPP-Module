@@ -34,43 +34,69 @@ Bureaucrat::~Bureaucrat(void)
 
 void	Bureaucrat::incrementGrade(void)
 {
-	if (this->_grade == Bureaucrat::_highestGrade)
-		throw Bureaucrat::GradeTooHighException();
-	else
-		std::cout << "New grade is -> " << --(this->_grade) << std::endl;
+	try 
+	{
+		if (this->_grade == Bureaucrat::_highestGrade)
+			throw Bureaucrat::GradeTooHighException();
+		else
+			std::cout << "New grade is -> " << --(this->_grade) << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 }
 
 void	Bureaucrat::decrementGrade(void)
 {
-	if (this->_grade == Bureaucrat::_lowestGrade)
-		throw Bureaucrat::GradeTooLowException();
-	else
-		std::cout << "New grade is -> " << ++(this->_grade) << std::endl;
-}
-
-void	Bureaucrat::signForm(AForm& form) const
-{
 	try
 	{
-		form.beSigned(*this);
-		std::cout << this->_name << " signs " << form.getName() << std::endl;
+		if (this->_grade == Bureaucrat::_lowestGrade)
+			throw Bureaucrat::GradeTooLowException();
+		else
+			std::cout << "New grade is -> " << ++(this->_grade) << std::endl;
 	}
-	catch (const std::exception& e)
+	catch(const std::exception& e)
 	{
-		std::cout << this->_name << " cannot sign " << form.getName() << " because " << e.what() << std::endl;
+		std::cerr << e.what() << '\n';
 	}
 }
 
-void	Bureaucrat::executeForm(const AForm& form) const
-{
+void	Bureaucrat::signForm(AForm* form) const
+{	
 	try
 	{
-		form.execute(*this);
-		std::cout << this->_name << " executes " << form.getName() << std::endl;
+		if (form == 0)
+			throw AForm::NoFormException();
+		form->beSigned((*this));
+		std::cout << this->_name << " signs " << form->getName() << std::endl;
+	}
+	catch (const AForm::NoFormException& e)
+	{
+		std::cerr << this->_name << " cannot sign the form because " << e.what() << std::endl;
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << this->_name << " cannot execute " << form.getName() << " because " << e.what() << std::endl;
+		std::cerr << this->_name << " cannot sign " << form->getName() << " because " << e.what() << std::endl;
+	}
+}
+
+void	Bureaucrat::executeForm(const AForm* form) const
+{
+	try
+	{
+		if (form == 0)
+			throw AForm::NoFormException();
+		form->execute(*this);
+		std::cout << this->_name << " executes " << form->getName() << std::endl;
+	}
+	catch (const AForm::NoFormException& e)
+	{
+		std::cerr << this->_name << " cannot execute the form because " << e.what() << std::endl;
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << this->_name << " cannot execute " << form->getName() << " because " << e.what() << std::endl;
 	}
 }
 
