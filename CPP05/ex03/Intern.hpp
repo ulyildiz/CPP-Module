@@ -5,17 +5,17 @@
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
 
-class ShurbberyCreationForm;
-class RobotomyRequestForm;
-class PresidentialPardonForm;
-
 class Intern {
 	private:
-		typedef struct _FormType {
-			std::string name;
-			AForm *obj;
-		} t_formType;
-		t_formType static const formTypes[3];
+		static const int _formCount = 3; 
+		struct FormType {
+			std::string	formName;
+			AForm*		(*formCreation)(const std::string& target);
+		} _formTypes[3] = {
+			{"shrubbery creation", &ShrubberyCreationForm::createForm},
+			{"robotomy request", &RobotomyRequestForm::createForm},
+			{"presidential pardon", &PresidentialPardonForm::createForm}
+		};
 	public:
 		Intern(void);
 		Intern(const Intern& coppied);

@@ -1,11 +1,5 @@
 #include "Intern.hpp"
 
-Intern::t_formType const formTypes[3] = {
-			{"ShrubberyCreationForm", new ShrubberyCreationForm()},
-			{"RobotomyRequestForm", new RobotomyRequestForm()},
-			{"PresidentialPardonForm", new PresidentialPardonForm()}
-};
-
 Intern::Intern(void)
 {
 	std::cout << " Intern Default constructor." << std::endl;
@@ -24,19 +18,17 @@ Intern::~Intern(void)
 
 AForm*	Intern::makeForm(const std::string& formName, const std::string& target) const
 {
-	for (size_t i = 0; i < count; i++)
-	{
-		/* code */
-	}
+	int i = 0;
+	for ( ; i < this->_formCount && formName == _formTypes[i].formName; i++);
 	
-	this->formTypes[0].obj->clone(target);
+	this->_formTypes[i].formCreation(target);
 }
 
 Intern& Intern::operator=(const Intern& other)
 {
 	std::cout << "Intern Assignation operator." << std::endl;
 	if (this != &other)
-	
+		 
 	return (*this);
 }
 

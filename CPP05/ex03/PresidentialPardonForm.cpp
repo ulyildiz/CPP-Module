@@ -21,6 +21,7 @@ PresidentialPardonForm::~PresidentialPardonForm(void)
 }
 
 const std::string&	PresidentialPardonForm::getTarget(void) const { return (this->_target); }
+AForm*	PresidentialPardonForm::createForm(const std::string& target) { return (new PresidentialPardonForm(target)); }
 
 void	PresidentialPardonForm::executeAction(void) const
 {

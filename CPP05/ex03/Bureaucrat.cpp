@@ -76,8 +76,6 @@ void	Bureaucrat::executeForm(const AForm& form) const
 
 const std::string& Bureaucrat::getName(void) const { return (this->_name); }
 const int&	Bureaucrat::getGrade(void) const { return (this->_grade); }
-/* const int&	Bureaucrat::getHighestGrade(void) const { return (Bureaucrat::_highestGrade); }
-const int&	Bureaucrat::getLowestGrade(void) const { return (Bureaucrat::_lowestGrade); } */
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() { return ("Grade is too high."); }
 const char* Bureaucrat::GradeTooLowException::what() const throw() { return ("Grade is too low."); }

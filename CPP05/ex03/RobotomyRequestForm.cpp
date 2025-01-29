@@ -22,6 +22,7 @@ RobotomyRequestForm::~RobotomyRequestForm(void)
 }
 
 const std::string& RobotomyRequestForm::getTarget(void) const { return (this->_target); }
+AForm*	RobotomyRequestForm::createForm(const std::string& target) { return (new RobotomyRequestForm(target)); }
 
 void	RobotomyRequestForm::executeAction(void) const
 {

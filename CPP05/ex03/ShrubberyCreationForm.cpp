@@ -21,6 +21,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm(void)
 }
 
 const std::string&	ShrubberyCreationForm::getTarget(void) const { return (this->_target); }
+AForm*	ShrubberyCreationForm::createForm(const std::string& target) { return (new ShrubberyCreationForm(target)); }
 
 void	ShrubberyCreationForm::executeAction(void) const
 {

@@ -44,7 +44,6 @@ class AForm {
 				virtual const char* what() const throw();
 		};
 
-		virtual AForm	*clone(std::string target) const = 0;
 		AForm& operator=(const AForm& other);
 };
 
