@@ -21,13 +21,11 @@ class Bureaucrat {
 
 		const std::string&	getName(void) const;
 		const int&			getGrade(void) const;
-/* 		const int&			getHighestGrade(void) const;
-		const int&			getLowestGrade(void) const; */
 		void				incrementGrade(void);
 		void				decrementGrade(void);
 
-		void				signForm(AForm& form) const;
-		void				executeForm(const AForm& form) const;
+		void				signForm(AForm* form) const;
+		void				executeForm(const AForm* form) const;
 
 		Bureaucrat&			operator=(const Bureaucrat& other);
 

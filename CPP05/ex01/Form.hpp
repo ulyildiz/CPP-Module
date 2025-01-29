@@ -9,8 +9,8 @@ class Form {
 	private:
 		const std::string	_name;
 		bool				_signed;
-		const int			_gradeToSign;
-		const int			_gradeToExecute;
+		int					_gradeToSign;
+		int					_gradeToExecute;
 	public:
 		Form(void);
 		Form(const std::string& name, int gradeToSign, int gradeToExecute);
@@ -36,6 +36,11 @@ class Form {
 			public:
 				virtual const char* what() const throw();
 		};
+		class NoFormException: public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+
 		Form& operator=(const Form& other);
 };
 

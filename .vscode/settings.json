@@ -72,7 +72,13 @@
     "numbers": "cpp",
     "fstream": "cpp",
     "stack": "cpp",
-    "format": "cpp"
+    "format": "cpp",
+    "charconv": "cpp",
+    "map": "cpp",
+    "span": "cpp",
+    "text_encoding": "cpp",
+    "cinttypes": "cpp",
+    "variant": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "clang",
   "C_Cpp_Runner.cppCompilerPath": "clang++",

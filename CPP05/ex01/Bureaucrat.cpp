@@ -34,37 +34,55 @@ Bureaucrat::~Bureaucrat(void)
 
 void	Bureaucrat::incrementGrade(void)
 {
-	if (this->_grade == Bureaucrat::_highestGrade)
-		throw Bureaucrat::GradeTooHighException();
-	else
-		std::cout << "New grade is -> " << --(this->_grade) << std::endl;
+	try
+	{
+		if (this->_grade == Bureaucrat::_highestGrade)
+			throw Bureaucrat::GradeTooHighException();
+		else
+			std::cout << "New grade is -> " << --(this->_grade) << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 }
 
 void	Bureaucrat::decrementGrade(void)
 {
-	if (this->_grade == Bureaucrat::_lowestGrade)
-		throw Bureaucrat::GradeTooLowException();
-	else
-		std::cout << "New grade is -> " << ++(this->_grade) << std::endl;
-}
-
-void	Bureaucrat::signForm(Form& form) const
-{
 	try
 	{
-		form.beSigned((*this));
-		std::cout << this->_name << " signs " << form.getName() << std::endl;
+		if (this->_grade == Bureaucrat::_lowestGrade)
+			throw Bureaucrat::GradeTooLowException();
+		else
+			std::cout << "New grade is -> " << ++(this->_grade) << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+}
+
+void	Bureaucrat::signForm(Form* form) const
+{	
+	try
+	{
+		if (form == 0)
+			throw Form::NoFormException();
+		form->beSigned((*this));
+		std::cout << this->_name << " signs " << form->getName() << std::endl;
+	}
+	catch (const Form::NoFormException& e)
+	{
+		std::cout << this->_name << " cannot sign the form because " << e.what() << std::endl;
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << this->_name << " cannot sign " << form.getName() << " because " << e.what() << std::endl;
+		std::cout << this->_name << " cannot sign " << form->getName() << " because " << e.what() << std::endl;
 	}
 }
 
 const std::string& Bureaucrat::getName(void) const { return (this->_name); }
 const int&	Bureaucrat::getGrade(void) const { return (this->_grade); }
-/* const int&	Bureaucrat::getHighestGrade(void) const { return (Bureaucrat::_highestGrade); }
-const int&	Bureaucrat::getLowestGrade(void) const { return (Bureaucrat::_lowestGrade); } */
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() { return ("Grade is too high."); }
 const char* Bureaucrat::GradeTooLowException::what() const throw() { return ("Grade is too low."); }

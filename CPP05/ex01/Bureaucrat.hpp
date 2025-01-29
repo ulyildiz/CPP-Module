@@ -22,12 +22,10 @@ class Bureaucrat {
 
 		const std::string&	getName(void) const;
 		const int&			getGrade(void) const;
-/* 		const int&			getHighestGrade(void) const;
-		const int&			getLowestGrade(void) const; */
 		void				incrementGrade(void);
 		void				decrementGrade(void);
 
-		void				signForm(Form& form) const;
+		void				signForm(Form* form) const;
 
 		Bureaucrat&			operator=(const Bureaucrat& other);
 

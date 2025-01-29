@@ -1,4 +1,5 @@
 #include "ShrubberyCreationForm.hpp"
+#include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm(void): AForm("ShrubberyCreationForm", ShrubberyCreationForm::_gradeToSign, ShrubberyCreationForm::_gradeToExecute), _target("default")
 {
@@ -24,13 +25,14 @@ const std::string&	ShrubberyCreationForm::getTarget(void) const { return (this->
 
 void	ShrubberyCreationForm::executeAction(void) const
 {
-	std::ofstream	outputFile((this->_target + "_shrubbery").c_str(), std::ios::out | std::ios::trunc | std::ios::app);
+	std::ofstream	outputFile;
 
+	outputFile.open((this->_target + "_shrubbery").c_str(), std::ofstream::out | std::ofstream::trunc);
 	if (!outputFile.is_open())
 		throw std::ofstream::failure("Error: could not open file.");
 	else
 	{
-		outputFile << 		"          .     .  .      +     .      .          .\n"
+		outputFile << "          .     .  .      +     .      .          .\n"
 		"     .       .      .     #       .           .\n"
 		"        .      .         ###            .      .      .\n"
 		"      .      .   \"#:. .:##\"##:. .:#\"  .      .\n"
@@ -54,9 +56,6 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
 {
 	std::cout << "ShrubberyCreationForm assignation operator." << std::endl;
 	if (this != &other)
-	{
-	//	AForm::operator=(other);
 		this->_target = other._target;
-	}
 	return (*this);
 }
