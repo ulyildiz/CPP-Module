@@ -20,9 +20,15 @@ a::~a()
 {
 }
 
+#include <iostream>
 int main(int argc, char const *argv[])
 {
     a *a1 = 0;
     a1->asd();
+    for (int i = -1; i < 4; i)
+    {
+        std::cout << i << std::endl;
+        ++i++;
+    }
     return 0;
 }

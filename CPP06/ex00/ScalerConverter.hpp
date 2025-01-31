@@ -11,23 +11,26 @@ class ScalerConverter
         ~ScalerConverter();
         ScalerConverter &operator=(const ScalerConverter &src);
 
+
+        int isChar(const std::string& input);
+        int isInt(const std::string& input);
+        int isFloat(const std::string& input);
+        int isDouble(const std::string& input);
+
+        void displayChar(const std::string& input);
+        void displayInt(const std::string& input);
+        void displayFloat(const std::string& input);
+        void displayDouble(const std::string& input);
+    
     public:
-        void        convertDouble(double input);
-        void        convertFloat(float input);
-        void        convertInt(int input);
-        void        convertChar(char *input);
-        static void convert(std::string& input);
+        static void convert(const std::string& input);
 
-        class ImpossibleException : public std::exception {
+        class NonLiteralException : public std::exception
+        {
             public:
-                virtual const char *what() const throw();
+                virtual const char* what() const throw();
         };
 
-        class NonDisplayableException : public std::exception {
-            public:
-                virtual const char *what() const throw();
-        };
-
-}
+};
 
 #endif

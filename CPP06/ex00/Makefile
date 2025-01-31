@@ -5,7 +5,7 @@ OBJ = $(SOURCE:.cpp=.o)
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
 $(NAME): $(OBJ)
-	c++ $(FLAGS) -o $(NAME) $(OBJ)
+	c++ $(FLAGS) $(OBJ) -o $(NAME)
 
 all: $(NAME)
 
