@@ -1,11 +1,11 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(void) : _name("White-collar")
+Bureaucrat::Bureaucrat(void) : _name("White-collar"), _grade(Bureaucrat::_lowestGrade)
 {
 	std::cout << "Default constructor." << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const std::string& name) : _name(name)
+Bureaucrat::Bureaucrat(const std::string& name) : _name(name), _grade(Bureaucrat::_lowestGrade)
 {
 	std::cout << "Constructor with name." << std::endl;
 }
@@ -89,7 +89,8 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() { return ("Gr
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other)
 {
-	this->_grade = other.getGrade();
+	if (this != &other)
+		this->_grade = other.getGrade();
 	return (*this);
 }
 

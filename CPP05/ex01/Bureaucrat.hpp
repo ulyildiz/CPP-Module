@@ -10,8 +10,6 @@ class Bureaucrat {
 	private:
 		const std::string	_name;
 		int					_grade;
-		static const int	_highestGrade = 1;
-		static const int	_lowestGrade = 150;
 
 	public:
 		Bureaucrat(void);
@@ -19,6 +17,9 @@ class Bureaucrat {
 		Bureaucrat(const std::string& name);
 		Bureaucrat(const std::string& name, int grade);
 		~Bureaucrat(void);
+
+		static const int	_highestGrade = 1;
+		static const int	_lowestGrade = 150;
 
 		const std::string&	getName(void) const;
 		const int&			getGrade(void) const;
@@ -31,11 +32,11 @@ class Bureaucrat {
 
 		class GradeTooHighException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 		class GradeTooLowException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 
 };

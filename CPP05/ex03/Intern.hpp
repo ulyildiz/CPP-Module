@@ -12,7 +12,7 @@ class Intern {
 			std::string	formName;
 			AForm*		(*formCreation)(const std::string& target);
 		} t_formType;
-		t_formType _formTypes[3];
+		t_formType _formTypes[_formCount];
 	public:
 		Intern(void);
 		Intern(const Intern& coppied);
@@ -24,7 +24,7 @@ class Intern {
 
 		class FormNotFoundException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 };
 

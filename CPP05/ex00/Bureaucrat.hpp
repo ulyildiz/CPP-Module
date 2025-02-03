@@ -19,8 +19,6 @@ class Bureaucrat {
 
 		const std::string&	getName(void) const;
 		const int&			getGrade(void) const;
-/* 		const int&			getHighestGrade(void) const;
-		const int&			getLowestGrade(void) const; */
 
 		void				incrementGrade(void);
 		void				decrementGrade(void);
@@ -29,12 +27,12 @@ class Bureaucrat {
 
 		class GradeTooHighException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 
 		class GradeTooLowException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 
 };

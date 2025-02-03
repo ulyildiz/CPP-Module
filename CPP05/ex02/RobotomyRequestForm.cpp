@@ -1,5 +1,6 @@
 #include "RobotomyRequestForm.hpp"
 #include <cstdlib>
+#include <ctime>
 
 RobotomyRequestForm::RobotomyRequestForm(void): AForm("RobotomyRequestForm", RobotomyRequestForm::_gradeToSign, RobotomyRequestForm::_gradeToExecute), _target("default")
 {
@@ -25,6 +26,8 @@ const std::string& RobotomyRequestForm::getTarget(void) const { return (this->_t
 
 void	RobotomyRequestForm::executeAction(void) const
 {
+	std::srand(std::time(0));
+
 	std::cout << "Drilling noises." << std::endl;
 	if (std::rand() % 2)
 		std::cout << this->getTarget() << " has been robotomized successfully." << std::endl;

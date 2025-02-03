@@ -6,36 +6,42 @@
 
 int main(void)
 {
-	Bureaucrat b1("B1", 1);
-	Intern intern;
-	AForm *form;
-
+	try
 	{
-		form = intern.makeForm("shrubbery creation", "target1");
+		Bureaucrat b1("B1", 1);
+		Intern intern;
+		AForm *form;
 
-		b1.signForm(form);
-		b1.executeForm(form);
+		{
+			form = intern.makeForm("shrubbery creation", "target1");
 
-		delete form;
+			b1.signForm(form);
+			b1.executeForm(form);
+
+			delete form;
+		}
+		
+		{
+			form = intern.makeForm("robotomy request", "target2");
+
+			b1.signForm(form);
+			b1.executeForm(form);
+		
+			delete form;
+		}
+
+		{
+			form = intern.makeForm("presidential pardon", "target3");
+
+			b1.signForm(form);
+			b1.executeForm(form);
+		
+			delete form;
+		}
 	}
-	
+	catch(const std::exception& e)
 	{
-		form = intern.makeForm("robotomy request", "target2");
-
-		b1.signForm(form);
-		b1.executeForm(form);
-	
-		delete form;
+		std::cerr << e.what() << std::endl;
 	}
-
-	{
-		form = intern.makeForm("presidential pardon", "target3");
-
-		b1.signForm(form);
-		b1.executeForm(form);
-	
-		delete form;
-	}
-
 	return (0);
 }

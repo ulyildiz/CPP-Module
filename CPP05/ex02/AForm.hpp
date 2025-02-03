@@ -14,6 +14,7 @@ class AForm {
 		int					_gradeToExecute;
 	public:
 		AForm(void);
+		AForm(const std::string& name);
 		AForm(const std::string& name, int gradeToSign, int gradeToExecute);
 		AForm(const AForm& coppied);
 		virtual ~AForm(void);
@@ -29,23 +30,23 @@ class AForm {
 
 		class GradeTooHighException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 		class GradeTooLowException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 		class FormAlreadySignedException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 		class FormNotSignedException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 		class NoFormException: public std::exception {
 			public:
-				virtual const char* what() const throw();
+				const char* what() const throw();
 		};
 
 		AForm& operator=(const AForm& other);

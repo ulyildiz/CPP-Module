@@ -1,8 +1,13 @@
 #include "AForm.hpp"
 
-AForm::AForm(void): _name("default"), _signed(false), _gradeToSign(1), _gradeToExecute(1)
+AForm::AForm(void): _name("default"), _signed(false), _gradeToSign(Bureaucrat::_highestGrade), _gradeToExecute(Bureaucrat::_highestGrade)
 {
 	std::cout << "AForm default constructor." << std::endl;
+}
+
+AForm::AForm(const std::string& name): _name(name), _signed(false), _gradeToSign(Bureaucrat::_highestGrade), _gradeToExecute(Bureaucrat::_highestGrade)
+{
+	std::cout << "AForm constructor." << std::endl;
 }
 
 AForm::AForm(const std::string& name, int gradeToSign, int gradeToExecute): _name(name), _signed(false)
@@ -83,6 +88,6 @@ std::ostream& operator<<(std::ostream& out, const AForm& form)
 		out << "signed";
 	else
 		out << "not signed";
-	out << " and requires grade " << form.getGradeToSign() << " to sign and grade " << form.getGradeToExecute() << " to execute." << std::endl;
+	out << " and requires grade " << form.getGradeToSign() << " to sign and grade " << form.getGradeToExecute() << " to execute.";
 	return (out);
 }
