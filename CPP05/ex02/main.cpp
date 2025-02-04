@@ -8,10 +8,11 @@ int main(void)
 	try
 	{
 		Bureaucrat b1("Bureaucrat 1", 42);
-		Bureaucrat b2("Bureaucrat 2", 30);
+		Bureaucrat b2("Bureaucrat 2", 2);
 		ShrubberyCreationForm s1("ShrubberyCreationForm 1");
 		RobotomyRequestForm r1("RobotomyRequestForm 1");
 		PresidentialPardonForm p1("PresidentialPardonForm 1");
+		ShrubberyCreationForm s2("ShrubberyCreationForm 2");
 
 		std::cout << b1 << std::endl;
 		std::cout << b2 << std::endl;
@@ -26,6 +27,10 @@ int main(void)
 		b1.executeForm(&s1);
 		b1.executeForm(&r1);
 		b1.executeForm(&p1);
+
+		s2 = s1;
+
+		std::cout << s2 << std::endl;
 	}
 	catch(const std::exception& e)
 	{

@@ -17,16 +17,10 @@ int main(void)
 		std::cout << f1 << std::endl;
 		std::cout << f2 << std::endl;
  
-		try
-		{
-			b1.signForm(&f1);
-			b2.signForm(&f2);
-		}
-		catch(const std::exception& e)
-		{
-			std::cerr << e.what() << std::endl;
-		}
-	
+
+		b1.signForm(&f1);
+		b2.signForm(&f2);
+
 		b1.signForm(f);
 
 
