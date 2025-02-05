@@ -18,16 +18,7 @@ ScalerConverter &ScalerConverter::operator=(const ScalerConverter &src)
 
 int ScalerConverter::isChar(const std::string& input)
 {
-    return (input.length() == 1 && isprint(input[0]) ? 1 : 0);
-}
-
-void    ScalerConverter::displayChar(const std::string& input)
-{
-    char c = input[0];
-    std::cout << "char: '" << c << "'" << std::endl;
-    std::cout << "int: " << static_cast<int>(c) << std::endl;
-    std::cout << "float: " << static_cast<float>(c) << ".0f" << std::endl;
-    std::cout << "double: " << static_cast<double>(c) << ".0" << std::endl;
+    return (input.length() == 1 && isascii(input[0]) ? 1 : 0);
 }
 
 int ScalerConverter::isInt(const std::string& input)
@@ -45,28 +36,12 @@ int ScalerConverter::isInt(const std::string& input)
     return (1);
 }
 
-void    ScalerConverter::displayInt(const std::string& input)
-{
-    int i = std::atoi(input.c_str());
-    
-    std::cout << "c" << std::endl;
-
-    std::cout << "char: ";
-    if (i < 32 || i > 126)
-        std::cout << "Non displayable" << std::endl;
-    else if ((std::numeric_limits<char>::max() < i || std::numeric_limits<char>::min() > i) || std::fmod(i, 1.0) != 0.0)
-        std::cout << "impossible" << std::endl;
-    else
-        std::cout << "'" << static_cast<char>(i) << "'" << std::endl;
-
-    std::cout << "int: " << i << std::endl;
-    std::cout << "float: " << static_cast<float>(i) << ".0f" << std::endl;
-    std::cout << "double: " << static_cast<double>(i) << ".0" << std::endl;
-}
-
 int ScalerConverter::isFloat(const std::string& input)
 {
     bool dot = false;
+
+    if (input == "nanf" || input == "+inff" || input == "-inff" || input == "inff")
+        return (1);
 
     for (std::string::size_type i = 0; i < input.length() - 1; i++)
     {
@@ -86,80 +61,119 @@ int ScalerConverter::isFloat(const std::string& input)
     return (0);
 }
 
-void    ScalerConverter::displayFloat(const std::string& input)
-{
-    float f = std::strtof(input.c_str(), NULL);
-
-    std::cout << "a" << std::endl;
-
-    std::cout << "char: ";
-    if (f < 32 || f > 126)
-        std::cout << "Non displayable" << std::endl;
-    else if ((std::numeric_limits<char>::max() < f || std::numeric_limits<char>::min() > f) || std::fmod(f, 1.0) != 0.0)
-        std::cout << "impossible" << std::endl;
-    else
-        std::cout << "'" << static_cast<char>(f) << "'" << std::endl;
-
-    std::cout << "int: ";
-    if (std::numeric_limits<int>::max() < f || std::numeric_limits<int>::min() > f)
-        std::cout << "impossible" << std::endl;
-    else
-        std::cout << static_cast<int>(f) << std::endl;
-
-
-    std::cout << "float: " << f << (std::fmod(f, 1.0f) != 0.0 ? "f" : ".0f") << std::endl;
-
-    std::cout << "double: " << static_cast<double>(f) << std::endl;
-}
 
 int ScalerConverter::isDouble(const std::string& input)
 {
-    int i = 0;
-    int dot = 0;
-    if (input[i] == '+' || input[i] == '-')
-        i++;
-    while (input[i])
+    bool dot = false;
+
+    if (input == "nan" || input == "+inf" || input == "-inf" || input == "inf")
+        return (1);
+
+    for (std::string::size_type i = 0; i < input.length() - 1; i++)
     {
+        if (input[i] == '+' || input[i] == '-')
+            i++;
         if (input[i] == '.')
         {
             if (dot)
                 return (0);
-            dot = 1;
+            dot = true;
         }
         else if (!isdigit(input[i]))
             return (0);
-        i++;
     }
     return (1);
 }
 
-void    ScalerConverter::displayDouble(const std::string& input)
+void	ScalerConverter::determineType(const std::string& input)
 {
-    double d = std::strtod(input.c_str(), NULL);
+	if (isChar(input))
+		_type = CHAR;
+	else if (isInt(input))
+		_type = INT;
+	else if (isFloat(input))
+		_type = FLOAT;
+	else if (isDouble(input))
+		_type = DOUBLE;
+	else
+		_type = NON_LITERAL;
+}
 
-    std::cout << "b" << std::endl;
+void	ScalerConverter::displayFromChar(char c)
+{
+	std::cout << "char: ";
+	if (isprint(c))
+		std::cout << "'" << c << "'" << std::endl;
+	else
+		std::cout << "Non displayable" << std::endl;
+	std::cout << "int: " << static_cast<int>(c) << std::endl;
+	std::cout << "float: " << static_cast<float>(c) << ".0f" << std::endl;
+	std::cout << "double: " << static_cast<double>(c) << ".0" << std::endl;
+}
 
-    std::cout << "char: ";
-    if (d < 32 || d > 126)
-        std::cout << "Non displayable" << std::endl;
-    else if ((std::numeric_limits<char>::max() < d || std::numeric_limits<char>::min() > d) || std::fmod(d, 1.0) != 0.0)
+void	ScalerConverter::displayFromInt(int i)
+{
+	std::cout << "char: ";
+	if (isprint(i))
+		std::cout << "'" << static_cast<char>(i) << "'" << std::endl;
+	else if (isascii(i))
+		std::cout << "Non displayable" << std::endl;
+	else
+        std::cout << "impossible" << std::endl;
+    
+    std::cout << "int: ";
+    if (i > std::numeric_limits<int>::max() || i < std::numeric_limits<int>::min())
         std::cout << "impossible" << std::endl;
     else
-        std::cout << "'" << static_cast<char>(d) << "'" << std::endl;
+    {
+        std::cout << i << std::endl;
+    }
+	std::cout << "float: " << static_cast<float>(i) << ".0f" << std::endl;
+	std::cout << "double: " << static_cast<double>(i) << ".0" << std::endl;
+}
+
+void    ScalerConverter::displayFromFloat(float f)
+{
+    bool    hasDecimal = std::fmod(f, 1.0f);
+
+	std::cout << "char: ";
+	if (31 < f && f < 127 && !hasDecimal)
+		std::cout << "'" << static_cast<char>(f) << "'" << std::endl;
+	else if (0 <= f && f <= 255 && !hasDecimal)
+		std::cout << "Non displayable" << std::endl;
+	else
+        std::cout << "impossible" << std::endl;
 
     std::cout << "int: ";
-    if (std::numeric_limits<int>::max() < d || std::numeric_limits<int>::min() > d)
+    if (f > std::numeric_limits<int>::max() || f < std::numeric_limits<int>::min() || isnan(f))
+        std::cout << "impossible" << std::endl;
+    else
+        std::cout << static_cast<int>(f) << std::endl;
+
+    std::cout << "float: " << f << (hasDecimal ? "f" : ".0f") << std::endl;
+    std::cout << "double: " << static_cast<double>(f) << std::endl;
+}
+
+void    ScalerConverter::displayFromDouble(double d)
+{
+    bool    hasDecimal = std::fmod(d, 1.0);
+
+	std::cout << "char: ";
+	if (d < 127 && d > 31 && !hasDecimal)
+		std::cout << "'" << static_cast<char>(d) << "'" << std::endl;
+	else if (0 <= d && d <= 255 && !hasDecimal)
+		std::cout << "Non displayable" << std::endl;
+	else
+        std::cout << "impossible" << std::endl;
+
+    std::cout << "int: ";
+    if (d > std::numeric_limits<int>::max() || d < std::numeric_limits<int>::min() || isnan(d))
         std::cout << "impossible" << std::endl;
     else
         std::cout << static_cast<int>(d) << std::endl;
 
-    std::cout << "float: ";
-    if (std::numeric_limits<float>::max() < d || std::numeric_limits<float>::min() > d)
-        std::cout << "impossible" << std::endl;
-    else
-        std::cout << static_cast<float>(d) << (std::fmod(d, 1.0f) != 0.0 ? "f" : ".0f") << std::endl;
-
-    std::cout << "double: " << d << (std::fmod(d, 1.0) != 0.0 ? "" : ".0") << std::endl;
+    std::cout << "float: " << static_cast<float>(d) << (hasDecimal ? "f" : ".0f") << std::endl;
+    std::cout << "double: " << d << std::endl;
 }
 
 void    ScalerConverter::convert(const std::string& input)
@@ -168,16 +182,25 @@ void    ScalerConverter::convert(const std::string& input)
 
     try
     {
-        if (sc.isChar(input))
-            sc.displayChar(input);
-        else if (sc.isInt(input))
-            sc.displayInt(input);
-        else if (sc.isFloat(input))
-            sc.displayFloat(input);
-        else if (sc.isDouble(input))
-            sc.displayDouble(input);
-        else
-            throw NonLiteralException();
+		sc.determineType(input);
+        switch	(sc._type)
+		{
+			case CHAR:
+				sc.displayFromChar(input.c_str()[0]);
+				break;
+			case INT:
+				sc.displayFromInt(std::atoi(input.c_str()));
+				break;
+			case FLOAT:
+				sc.displayFromFloat(std::strtof(input.c_str(), NULL));
+				break;
+			case DOUBLE:
+				sc.displayFromDouble(std::strtod(input.c_str(), NULL));
+				break;
+			case NON_LITERAL:
+				throw ScalerConverter::NonLiteralException();
+				break;
+		}
     }
     catch (std::exception &e)
     {

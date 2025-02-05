@@ -1,13 +1,34 @@
-#include <iostream>
-#include <unistd.h>
-#include <iomanip>
-#include <streambuf>
-#include <iosfwd>
-int main()
+class a
 {
-	std::cout << std::setw(50) << "mustafa cıksana 2" << " asd" << std::endl;
-	std::cout << "mustafa cıksana ";
-	usleep(5);
-//	std::streambuf *a = std::cout.rdbuf();
-	std::cout << sizeof(ptrdiff_t);	
+private:
+    /* data */
+public:
+    a(/* args */);
+    void asd()
+    {
+        if (this == 0)
+            return ;
+    }
+    ~a();
+};
+
+a::a(/* args */)
+{
+}
+
+a::~a()
+{
+}
+
+#include <iostream>
+int main(int argc, char const *argv[])
+{
+    a *a1 = 0;
+    a1->asd();
+    for (int i = -1; i < 4; i)
+    {
+        std::cout << i << std::endl;
+        ++i++;
+    }
+    return 0;
 }
