@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <limits>
+#include <sstream>
 
 ScalerConverter::ScalerConverter() {}
 
@@ -106,6 +107,15 @@ int ScalerConverter::isDouble(const std::string& input)
         else if (!isdigit(input[i]))
             return (0);
     }
+
+    std::stringstream ss;
+
+    ss << strtod(input.c_str(), NULL);
+    if (ss.str() != input)
+    {
+        this->_type = IMPOSSIBLE;
+        return (0);
+    }
     return (1);
 }
 
@@ -119,8 +129,8 @@ void	ScalerConverter::determineType(const std::string& input)
 		_type = FLOAT;
 	else if (isDouble(input))
 		_type = DOUBLE;
-	else
-		_type = NON_LITERAL;
+	else if (_type != IMPOSSIBLE)
+        _type = NON_LITERAL;
 }
 
 void	ScalerConverter::displayFromChar(char c)
@@ -152,6 +162,7 @@ void	ScalerConverter::displayFromInt(int i)
     {
         std::cout << i << std::endl;
     }
+
 	std::cout << "float: " << static_cast<float>(i) << ".0f" << std::endl;
 	std::cout << "double: " << static_cast<double>(i) << ".0" << std::endl;
 }
@@ -200,6 +211,14 @@ void    ScalerConverter::displayFromDouble(double d)
     std::cout << "double: " << d << std::endl;
 }
 
+void    ScalerConverter::displayAllImpossible(void)
+{
+    std::cout << "char: impossible" << std::endl;
+    std::cout << "int: impossible" << std::endl;
+    std::cout << "float: impossible" << std::endl;
+    std::cout << "double: impossible" << std::endl;
+}
+
 void    ScalerConverter::convert(const std::string& input)
 {
     ScalerConverter sc;
@@ -221,7 +240,10 @@ void    ScalerConverter::convert(const std::string& input)
 			case DOUBLE:
 				sc.displayFromDouble(std::strtod(input.c_str(), NULL));
 				break;
-			case NON_LITERAL:
+			case IMPOSSIBLE:
+                sc.displayAllImpossible();
+                break;
+            default:
 				throw ScalerConverter::NonLiteralException();
 				break;
 		}

@@ -2,8 +2,13 @@
 
 int main(int argc, char *argv[])
 {
-    (void)argc;
+    if (argc != 2)
+    {
+        std::cerr << "Usage: ./convert [value]" << std::endl;
+        return (1);
+    }
     std::string str(argv[1]);
 
     ScalerConverter::convert(str);
-} //whne input is nan, convert display int too, it should not
+    return (0);
+}

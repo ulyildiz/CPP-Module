@@ -11,29 +11,29 @@ class ScalerConverter
         ~ScalerConverter();
         ScalerConverter &operator=(const ScalerConverter &src);
 
-		enum e_type {
+	    enum e_type {
 			CHAR,
 			INT,
 			FLOAT,
 			DOUBLE,
+            IMPOSSIBLE,
 			NON_LITERAL
 		};
 
-		e_type	_type;
+		e_type  _type;
 
         int isChar(const std::string& input);
         int isInt(const std::string& input);
         int isFloat(const std::string& input);
         int isDouble(const std::string& input);
 
-        void displayFromChar(char c);
-        void displayFromInt(int i);
-        void displayFromFloat(float f);
-        void displayFromDouble(double d);
-
-
+        void    displayFromChar(char c);
+        void    displayFromInt(int i);
+        void    displayFromFloat(float f);
+        void    displayFromDouble(double d);
+        void    displayAllImpossible(void);
     
-        void	determineType(const std::string& input);
+        void    determineType(const std::string& input);
 
     public:
         static void convert(const std::string& input);
@@ -41,7 +41,7 @@ class ScalerConverter
         class NonLiteralException : public std::exception
         {
             public:
-                virtual const char* what() const throw();
+                const char* what() const throw();
         };
 
 };
