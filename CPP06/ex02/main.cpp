@@ -6,21 +6,23 @@
 
 Base * generate(void)
 {
-    int i = rand() % 3;
+    std::srand(time(NULL));
+
+    int i = std::rand() % 3;
     if (i == 0)
     {
-        std::cout << "A generated" << std::endl;
-        return new A;
+        std::cout << "A generated." << std::endl;
+        return (new A);
     }
     else if (i == 1)
     {
-        std::cout << "B generated" << std::endl;
-        return new B;
+        std::cout << "B generated." << std::endl;
+        return (new B);
     }
     else
     {
-        std::cout << "C generated" << std::endl;
-        return new C;
+        std::cout << "C generated." << std::endl;
+        return (new C);
     }
 }
 
@@ -50,7 +52,7 @@ void identify(Base & p)
     }
     catch (std::exception& e)
     {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "A -> " << e.what() << std::endl;
     }
     try
     {
@@ -60,7 +62,7 @@ void identify(Base & p)
     }
     catch (std::exception& e)
     {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "B -> " << e.what() << std::endl;
     }
     try
     {
@@ -70,7 +72,7 @@ void identify(Base & p)
     }
     catch (std::exception& e)
     {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "C -> " << e.what() << std::endl;
     }
     catch (...)
     {
@@ -80,7 +82,6 @@ void identify(Base & p)
 
 int main()
 {
-    srand(time(NULL));
     Base * p = generate();
     identify(p);
     identify(*p);
