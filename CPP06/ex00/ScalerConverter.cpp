@@ -23,16 +23,40 @@ int ScalerConverter::isChar(const std::string& input)
 
 int ScalerConverter::isInt(const std::string& input)
 {
-    int i = 0;
+    std::string::size_type i = 0;
+    bool isNegative = false;
 
     if (input[i] == '+' || input[i] == '-')
-        i++;
-    while (input[i])
     {
-        if (!isdigit(input[i]))
-            return (0);
+        isNegative = (input[i] == '-');
         i++;
     }
+
+    while (i < input.length() && input[i] == '0') 
+        i++;
+
+    std::string numStr = input.substr(i);
+
+    for (std::string::size_type j = 0; j < numStr.length(); j++)
+    {
+        if (!std::isdigit(numStr[j]))
+            return (0);
+    }
+
+    std::string maxIntStr = "2147483647";
+    std::string minIntStr = "2147483648";
+
+    if (numStr.length() > maxIntStr.length())
+        return (0);
+    else if (numStr.length() == maxIntStr.length())
+    {
+        for (std::string::size_type i = 0; i < maxIntStr.length(); i++)
+        {
+            if (numStr[i] > (isNegative ? minIntStr[i] : maxIntStr[i]))
+                return (0);
+        }
+    }
+
     return (1);
 }
 
@@ -114,9 +138,9 @@ void	ScalerConverter::displayFromChar(char c)
 void	ScalerConverter::displayFromInt(int i)
 {
 	std::cout << "char: ";
-	if (isprint(i))
+	if (31 < i && i < 127)
 		std::cout << "'" << static_cast<char>(i) << "'" << std::endl;
-	else if (isascii(i))
+	else if (0 <= i && i <= 255)
 		std::cout << "Non displayable" << std::endl;
 	else
         std::cout << "impossible" << std::endl;

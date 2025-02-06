@@ -1,15 +1,20 @@
 #include "Serializer.hpp"
 
-Serializer::Serializer(): data("default", 20, 20.0f) {;}
+Serializer::Serializer() {}
 
-Serializer::Serializer(const Serializer& coppied) : data(coppied.data)
+Serializer::Serializer(const Serializer& coppied)
 {
     *this = coppied;
 }
 
 Serializer::~Serializer() {}
 
-Serializer& Serializer::operator=(const Serializer& other) {
+Serializer& Serializer::operator=(const Serializer& other)
+{
     (void)other;
-    return *this;
+    return (*this);
 }
+
+uintptr_t   Serializer::serialize(Data* ptr) { return reinterpret_cast<uintptr_t>(ptr); }
+
+Data*   Serializer::deserialize(uintptr_t raw) { return reinterpret_cast<Data*>(raw); }
