@@ -20,7 +20,13 @@ class ScalerConverter
 			NON_LITERAL
 		};
 
+		e_type	_ouFlow; 
 		e_type  _type;
+
+		char	_c;
+		int		_i;
+		float	_f;
+		double	_d;
 
         int isChar(const std::string& input);
         int isInt(const std::string& input);
