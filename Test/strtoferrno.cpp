@@ -2,9 +2,10 @@
 #include <errno.h>
 #include <cstring>
 #include <cmath>
+#include <limits>
 int main()
 {
-	std::string input = "3.502823467e+38";
+/* 	std::string input = "3.502823467e+38";
 
 	float f = std::strtof(input.c_str(), NULL);
 	float a = HUGE_VALF;
@@ -12,4 +13,8 @@ int main()
 		std::cout << "Error: " << strerror(errno) << std::endl;
 	else
 		std::cout << f << std::endl;
+}*/
+
+	std::cout << -std::numeric_limits<double>::max() << std::endl;
+	std::cout << std::numeric_limits<double>::min() << std::endl;
 }

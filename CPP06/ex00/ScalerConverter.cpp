@@ -192,7 +192,7 @@ void    ScalerConverter::displayFromFloat(float f)
         std::cout << "impossible" << std::endl;
 
     std::cout << "int: ";
-    if (_ouFlow == INT || std::isnan(f) /* || INT_MAX < f || f < INT_MIN */)
+    if (_ouFlow == INT || std::isnan(f))
         std::cout << "impossible" << std::endl;
     else
 		std::cout << static_cast<int>(f) << std::endl;
@@ -214,13 +214,13 @@ void    ScalerConverter::displayFromDouble(double d)
         std::cout << "impossible" << std::endl;
 
     std::cout << "int: ";
-    if (_ouFlow == INT || std::isnan(d) || INT_MAX < d || d < INT_MIN)
+    if (_ouFlow == INT || std::isnan(d) || std::numeric_limits<int>::max() < d || d < std::numeric_limits<int>::min())
         std::cout << "impossible" << std::endl;
     else
 		std::cout << static_cast<int>(d) << std::endl;
 
 	std::cout << "float: ";
-    if (_ouFlow == FLOAT || FLT_MAX < d || d < -FLT_MIN)
+    if (_ouFlow == FLOAT || std::numeric_limits<float>::max() < d || d < -std::numeric_limits<float>::max())
 		std::cout << "impossible" << std::endl;
 	else
 		std::cout << static_cast<float>(d) << (hasDecimal ? "f" : ".0f") << std::endl;

@@ -20,12 +20,12 @@ template <typename T>
 Array<T>&	Array<T>::operator=(const Array& other)
 {
 	if (this == &other)
-	return (*this);
+		return (*this);
 	delete[] this->_array;
 	this->_array = new T[other._size];
 	this->_size = other._size;
 	for (unsigned int i = 0; i < _size; i++)
-	this->_array[i] = other._array[i];
+		this->_array[i] = other._array[i];
 	return (*this);
 }
 
