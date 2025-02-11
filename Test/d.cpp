@@ -28,4 +28,6 @@ int main()
         std::cout << "Not equal" << std::endl;
     else
         std::cout << "Equal" << std::endl;
+
+	std::cout << (float)1.0e+40 << std::endl;
 }

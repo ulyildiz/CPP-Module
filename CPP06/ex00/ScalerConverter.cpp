@@ -68,7 +68,7 @@ int ScalerConverter::isFloat(const std::string& input)
     bool dot = false;
 
     if (input == "nanf" || input == "+inff" || input == "-inff" || input == "inff")
-        return (_f = std::strtof(input.c_str(), NULL) , 1);
+        return (_f = std::strtof(input.c_str(), NULL), 1);
 
     for (std::string::size_type i = 0; i < input.length() - 1; i++)
     {
@@ -89,7 +89,8 @@ int ScalerConverter::isFloat(const std::string& input)
 		if (errno == ERANGE)
 		{
 			_ouFlow = FLOAT;
-			return (errno = 0, 0);
+			errno = 0;
+			return (0);
 		}
 	    return (1);
 	}
@@ -102,7 +103,7 @@ int ScalerConverter::isDouble(const std::string& input)
     bool dot = false;
 
     if (input == "nan" || input == "+inf" || input == "-inf" || input == "inf")
-        return (_d = std::strtod(input.c_str(), NULL) ,1);
+        return (_d = std::strtod(input.c_str(), NULL), 1);
 
     for (std::string::size_type i = 0; i < input.length() - 1; i++)
     {
