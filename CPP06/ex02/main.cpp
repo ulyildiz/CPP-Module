@@ -86,5 +86,6 @@ int main()
     identify(p);
     identify(*p);
     delete p;
+
     return 0;
 }

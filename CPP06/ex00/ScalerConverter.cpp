@@ -1,10 +1,9 @@
 #include "ScalerConverter.hpp"
 #include <cstdlib>
-#include <cmath>
-#include <cfloat>
 #include <limits>
-#include <sstream>
+#include <cmath>
 #include <errno.h>
+#include <iomanip>
 
 ScalerConverter::ScalerConverter() {}
 
@@ -21,12 +20,20 @@ ScalerConverter &ScalerConverter::operator=(const ScalerConverter &src)
 
 int ScalerConverter::isChar(const std::string& input)
 {
-    return (input.length() == 1 && isascii(input[0]) ? 1 : (_ouFlow = CHAR));
+	if (input.length() == 1 && isascii(input[0]))
+	{
+		this->_c = input.c_str()[0];
+		return (1);
+	}
+	this->_ouFlow = CHAR;
+    return (0);
 }
 
 int ScalerConverter::isInt(const std::string& input)
 {
     std::string::size_type i = 0;
+    std::string maxIntStr = "2147483647";
+    std::string minIntStr = "2147483648";
     bool isNegative = false;
 
     if (input[i] == '+' || input[i] == '-')
@@ -45,9 +52,6 @@ int ScalerConverter::isInt(const std::string& input)
         if (!std::isdigit(numStr[j]))
             return (0);
     }
-
-    std::string maxIntStr = "2147483647";
-    std::string minIntStr = "2147483648";
 
     if (numStr.length() > maxIntStr.length())
         return (_ouFlow = INT, 0);
@@ -102,8 +106,8 @@ int ScalerConverter::isDouble(const std::string& input)
 {
     bool dot = false;
 
-    if (input == "nan" || input == "+inf" || input == "-inf" || input == "inf")
-        return (_d = std::strtod(input.c_str(), NULL), 1);
+	if (input == "nan" || input == "+inf" || input == "-inf" || input == "inf")
+		return (_d = std::strtod(input.c_str(), NULL), 1);
 
     for (std::string::size_type i = 0; i < input.length() - 1; i++)
     {
@@ -117,9 +121,11 @@ int ScalerConverter::isDouble(const std::string& input)
         }
         else if (!isdigit(input[i]))
             return (0);
-    }
+	}
 
-	if (input[input.length() - 1] == 'f' || isdigit(input[input.length() - 1]))
+	if (input[input.length()] != 'f' && isdigit(input[input.length()]) && input[input.length()] != '.')
+		return (0);
+	else
 	{
 		_d = std::strtod(input.c_str(), NULL);
 		if (errno == ERANGE)
@@ -185,21 +191,21 @@ void    ScalerConverter::displayFromFloat(float f)
     bool    hasDecimal = std::fmod(f, 1.0f);
 
 	std::cout << "char: ";
-	if (!hasDecimal && 31 < f && f < 127)
+	if (31 < f && f < 127)
 		std::cout << "'" << static_cast<char>(f) << "'" << std::endl;
-	else if (!hasDecimal && 0 <= f && f <= 255)
+	else if (0 <= f && f <= 255)
 		std::cout << "Non displayable" << std::endl;
 	else
         std::cout << "impossible" << std::endl;
 
     std::cout << "int: ";
-    if (_ouFlow == INT || std::isnan(f))
+    if (_ouFlow == INT || std::isnan(f) || std::numeric_limits<int>::max() < f || f < std::numeric_limits<int>::min())
         std::cout << "impossible" << std::endl;
     else
 		std::cout << static_cast<int>(f) << std::endl;
-	
-	std::cout << "float: " << f << (hasDecimal ? "f" : ".0f") << std::endl;
-    std::cout << "double: " << static_cast<double>(f) << std::endl;
+
+	std::cout << std::setprecision(309) << "float: " << f << (hasDecimal ? "f" : ".0f") << std::endl;
+    std::cout << std::setprecision(309) << "double: " << static_cast<double>(f) << std::endl;
 }
 
 void    ScalerConverter::displayFromDouble(double d)
@@ -207,9 +213,9 @@ void    ScalerConverter::displayFromDouble(double d)
     bool    hasDecimal = std::fmod(d, 1.0);
 
 	std::cout << "char: ";
-	if (!hasDecimal && 31 < d && d < 127)
+	if (31 < d && d < 127)
 		std::cout << "'" << static_cast<char>(d) << "'" << std::endl;
-	else if (!hasDecimal && 0 <= d && d <= 255)
+	else if (0 <= d && d <= 255)
 		std::cout << "Non displayable" << std::endl;
 	else
         std::cout << "impossible" << std::endl;
@@ -221,11 +227,11 @@ void    ScalerConverter::displayFromDouble(double d)
 		std::cout << static_cast<int>(d) << std::endl;
 
 	std::cout << "float: ";
-    if (_ouFlow == FLOAT || std::numeric_limits<float>::max() < d || d < -std::numeric_limits<float>::max())
+    if ((_ouFlow == FLOAT || std::numeric_limits<float>::max() < d || d < -std::numeric_limits<float>::max()) && !std::isinf(d))
 		std::cout << "impossible" << std::endl;
 	else
-		std::cout << static_cast<float>(d) << (hasDecimal ? "f" : ".0f") << std::endl;
-    std::cout << "double: " << d << std::endl;
+		std::cout << std::setprecision(309) << static_cast<float>(d) << (std::fmod(static_cast<float>(d), 1.0f) ? "f" : ".0f") << std::endl;
+	std::cout << std::setprecision(309) << "double: " << d << (hasDecimal ? "" : ".0") << std::endl;
 }
 
 void    ScalerConverter::displayAllImpossible(void)
@@ -243,13 +249,12 @@ void    ScalerConverter::convert(const std::string& input)
     try
     {
 		sc.determineType(input);
-		std::cout << "ouflow : " << sc._ouFlow << std::endl;
         switch	(sc._type)
 		{
 			case CHAR:
 				std::cout << "enter char: " << std::endl;
 				sc.displayFromChar(sc._c);
-				break;
+				break ;
 			case INT:
 				std::cout << "enter int: " << std::endl;
 				sc.displayFromInt(sc._i);

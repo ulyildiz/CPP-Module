@@ -18,5 +18,18 @@ int main(void)
     std::cout << "i: " << data.i << std::endl;
     std::cout << "f: " << data.f << std::endl;
 
+	/* {
+		unsigned long* nonReinterpretCast = &data;
+
+		std::cout << "nonReinterpretCast: " << nonReinterpretCast << std::endl;
+
+		Data*	nonReinterpretCastData = (Data*)nonReinterpretCast;
+
+		std::cout << "nonReinterpretCastData: " << nonReinterpretCastData << std::endl;
+		std::cout << "str: " << nonReinterpretCastData->str << std::endl;
+		std::cout << "i: " << nonReinterpretCastData->i << std::endl;
+		std::cout << "f: " << nonReinterpretCastData->f << std::endl;
+	} */
+
     return 0;
 }

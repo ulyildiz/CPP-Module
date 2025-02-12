@@ -1,7 +1,7 @@
 #ifndef EASYFIND_HPP
 # define EASYFIND_HPP
 
-#include <exception>
+# include <exception>
 
 template <typename T>
 typename T::iterator easyfind(T const &container, int const n)
