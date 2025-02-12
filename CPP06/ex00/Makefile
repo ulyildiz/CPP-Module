@@ -1,6 +1,6 @@
-NAME = scalerconverter
+NAME = scalarconverter
 SOURCE = main.cpp \
-		ScalerConverter.cpp
+		ScalarConverter.cpp
 OBJ = $(SOURCE:.cpp=.o)
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 

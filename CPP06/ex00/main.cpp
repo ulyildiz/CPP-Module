@@ -1,4 +1,4 @@
-#include "ScalerConverter.hpp"
+#include "ScalarConverter.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	{
 		std::string str(argv[1]);
 
-		ScalerConverter::convert(str);
+		ScalarConverter::convert(str);
 	}
 
 /* 	{

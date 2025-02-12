@@ -1,24 +1,24 @@
-#include "ScalerConverter.hpp"
+#include "ScalarConverter.hpp"
 #include <cstdlib>
 #include <limits>
 #include <cmath>
 #include <errno.h>
 #include <iomanip>
 
-ScalerConverter::ScalerConverter() {}
+ScalarConverter::ScalarConverter() {}
 
-ScalerConverter::ScalerConverter(const ScalerConverter &src) { *this = src; }
+ScalarConverter::ScalarConverter(const ScalarConverter &src) { *this = src; }
 
-ScalerConverter::~ScalerConverter() {}
+ScalarConverter::~ScalarConverter() {}
 
-ScalerConverter &ScalerConverter::operator=(const ScalerConverter &src)
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &src)
 {
     if (this == &src)
         return (*this);
     return (*this);
 }
 
-int ScalerConverter::isChar(const std::string& input)
+int ScalarConverter::isChar(const std::string& input)
 {
 	if (input.length() == 1 && isascii(input[0]))
 	{
@@ -29,7 +29,7 @@ int ScalerConverter::isChar(const std::string& input)
     return (0);
 }
 
-int ScalerConverter::isInt(const std::string& input)
+int ScalarConverter::isInt(const std::string& input)
 {
     std::string::size_type i = 0;
     std::string maxIntStr = "2147483647";
@@ -67,7 +67,7 @@ int ScalerConverter::isInt(const std::string& input)
     return (1);
 }
 
-int ScalerConverter::isFloat(const std::string& input)
+int ScalarConverter::isFloat(const std::string& input)
 {
     bool dot = false;
 
@@ -102,7 +102,7 @@ int ScalerConverter::isFloat(const std::string& input)
 }
 
 
-int ScalerConverter::isDouble(const std::string& input)
+int ScalarConverter::isDouble(const std::string& input)
 {
     bool dot = false;
 
@@ -140,7 +140,7 @@ int ScalerConverter::isDouble(const std::string& input)
     return (0);
 }
 
-void	ScalerConverter::determineType(const std::string& input)
+void	ScalarConverter::determineType(const std::string& input)
 {
 	if (isChar(input))
 		_type = CHAR;
@@ -154,7 +154,7 @@ void	ScalerConverter::determineType(const std::string& input)
         _type = NON_LITERAL;
 }
 
-void	ScalerConverter::displayFromChar(char c)
+void	ScalarConverter::displayFromChar(char c)
 {
 	std::cout << "char: ";
 	if (isprint(c))
@@ -166,7 +166,7 @@ void	ScalerConverter::displayFromChar(char c)
 	std::cout << "double: " << static_cast<double>(c) << ".0" << std::endl;
 }
 
-void	ScalerConverter::displayFromInt(int i)
+void	ScalarConverter::displayFromInt(int i)
 {
 	std::cout << "char: ";
 	if (31 < i && i < 127)
@@ -186,7 +186,7 @@ void	ScalerConverter::displayFromInt(int i)
 	std::cout << "double: " << static_cast<double>(i) << ".0" << std::endl;
 }
 
-void    ScalerConverter::displayFromFloat(float f)
+void    ScalarConverter::displayFromFloat(float f)
 {
     bool    hasDecimal = std::fmod(f, 1.0f);
 
@@ -204,11 +204,11 @@ void    ScalerConverter::displayFromFloat(float f)
     else
 		std::cout << static_cast<int>(f) << std::endl;
 
-	std::cout << std::setprecision(309) << "float: " << f << (hasDecimal ? "f" : ".0f") << std::endl;
-    std::cout << std::setprecision(309) << "double: " << static_cast<double>(f) << std::endl;
+	std::cout << "float: " << f << (hasDecimal ? "f" : ".0f") << std::endl;
+    std::cout << "double: " << static_cast<double>(f) << (std::fmod(static_cast<double>(f), 1.0f) ? "" : ".0") << std::endl;
 }
 
-void    ScalerConverter::displayFromDouble(double d)
+void    ScalarConverter::displayFromDouble(double d)
 {
     bool    hasDecimal = std::fmod(d, 1.0);
 
@@ -230,11 +230,11 @@ void    ScalerConverter::displayFromDouble(double d)
     if ((_ouFlow == FLOAT || std::numeric_limits<float>::max() < d || d < -std::numeric_limits<float>::max()) && !std::isinf(d))
 		std::cout << "impossible" << std::endl;
 	else
-		std::cout << std::setprecision(309) << static_cast<float>(d) << (std::fmod(static_cast<float>(d), 1.0f) ? "f" : ".0f") << std::endl;
-	std::cout << std::setprecision(309) << "double: " << d << (hasDecimal ? "" : ".0") << std::endl;
+		std::cout << static_cast<float>(d) << (std::fmod(static_cast<float>(d), 1.0f) ? "f" : ".0f") << std::endl;
+	std::cout << "double: " << d << (hasDecimal ? "" : ".0") << std::endl;
 }
 
-void    ScalerConverter::displayAllImpossible(void)
+void    ScalarConverter::displayAllImpossible(void)
 {
     std::cout << "char: impossible" << std::endl;
     std::cout << "int: impossible" << std::endl;
@@ -242,12 +242,13 @@ void    ScalerConverter::displayAllImpossible(void)
     std::cout << "double: impossible" << std::endl;
 }
 
-void    ScalerConverter::convert(const std::string& input)
+void    ScalarConverter::convert(const std::string& input)
 {
-    ScalerConverter sc;
+    ScalarConverter sc;
 
     try
     {
+		std::cout << std::setprecision(309);
 		sc.determineType(input);
         switch	(sc._type)
 		{
@@ -271,7 +272,7 @@ void    ScalerConverter::convert(const std::string& input)
                 sc.displayAllImpossible();
                 break;
             default:
-				throw ScalerConverter::NonLiteralException();
+				throw ScalarConverter::NonLiteralException();
 				break;
 		}
     }
@@ -281,4 +282,10 @@ void    ScalerConverter::convert(const std::string& input)
     }
 }
 
-const char* ScalerConverter::NonLiteralException::what() const throw() { return ("Non literal value"); }
+const char* ScalarConverter::NonLiteralException::what() const throw() { return ("Non literal value"); }
+
+
+// ./convert 9 && ./convert 57
+// ./convert "" && ./convert 0
+// ./convert 2.f && ./convert 4a
+// ./convert 4.a && ./convert 1111111

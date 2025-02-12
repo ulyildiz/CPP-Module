@@ -1,15 +1,15 @@
-#ifndef SCALERCONVERTER_HPP
-# define SCALERCONVERTER_HPP
+#ifndef SCALARCONVERTER_HPP
+# define SCALARCONVERTER_HPP
 
 # include <iostream>
 
-class ScalerConverter
+class ScalarConverter
 {
     private:
-        ScalerConverter();
-        ScalerConverter(const ScalerConverter &src);
-        ~ScalerConverter();
-        ScalerConverter &operator=(const ScalerConverter &src);
+        ScalarConverter();
+        ScalarConverter(const ScalarConverter &src);
+        ~ScalarConverter();
+        ScalarConverter &operator=(const ScalarConverter &src);
 
 	    enum e_type {
 			CHAR,
