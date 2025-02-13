@@ -3,7 +3,7 @@
 #include <limits>
 #include <cmath>
 #include <errno.h>
-#include <iomanip>
+#include <sstream>
 
 ScalarConverter::ScalarConverter() {}
 
@@ -109,7 +109,7 @@ int ScalarConverter::isDouble(const std::string& input)
 	if (input == "nan" || input == "+inf" || input == "-inf" || input == "inf")
 		return (_d = std::strtod(input.c_str(), NULL), 1);
 
-    for (std::string::size_type i = 0; i < input.length() - 1; i++)
+    for (std::string::size_type i = 0; i < input.length(); i++)
     {
         if (input[i] == '+' || input[i] == '-')
             i++;
@@ -123,9 +123,7 @@ int ScalarConverter::isDouble(const std::string& input)
             return (0);
 	}
 
-	if (input[input.length()] != 'f' && isdigit(input[input.length()]) && input[input.length()] != '.')
-		return (0);
-	else
+	if (dot)
 	{
 		_d = std::strtod(input.c_str(), NULL);
 		if (errno == ERANGE)
@@ -137,15 +135,16 @@ int ScalarConverter::isDouble(const std::string& input)
 		}
 		return (1);
 	}
+
     return (0);
 }
 
 void	ScalarConverter::determineType(const std::string& input)
 {
-	if (isChar(input))
-		_type = CHAR;
-	else if (isInt(input))
+	if (isInt(input))
 		_type = INT;
+	else if (isChar(input))
+		_type = CHAR;
 	else if (isFloat(input))
 		_type = FLOAT;
 	else if (isDouble(input))
@@ -182,14 +181,24 @@ void	ScalarConverter::displayFromInt(int i)
     else
 		std::cout << i << std::endl;
 	
-	std::cout << "float: " << static_cast<float>(i) << ".0f" << std::endl;
-	std::cout << "double: " << static_cast<double>(i) << ".0" << std::endl;
+	std::ostringstream oss;
+	oss << i;
+	std::string str = oss.str();
+
+	if (str.find('e') != std::string::npos)
+	{
+		std::cout << "float: " << static_cast<float>(i) << "f" << std::endl;
+		std::cout << "double: " << static_cast<double>(i) << std::endl;
+	}
+	else
+	{
+		std::cout << "float: " << static_cast<float>(i) << ".0f" << std::endl;
+		std::cout << "double: " << static_cast<double>(i) << ".0" << std::endl;
+	}
 }
 
 void    ScalarConverter::displayFromFloat(float f)
 {
-    bool    hasDecimal = std::fmod(f, 1.0f);
-
 	std::cout << "char: ";
 	if (31 < f && f < 127)
 		std::cout << "'" << static_cast<char>(f) << "'" << std::endl;
@@ -204,14 +213,24 @@ void    ScalarConverter::displayFromFloat(float f)
     else
 		std::cout << static_cast<int>(f) << std::endl;
 
-	std::cout << "float: " << f << (hasDecimal ? "f" : ".0f") << std::endl;
-    std::cout << "double: " << static_cast<double>(f) << (std::fmod(static_cast<double>(f), 1.0f) ? "" : ".0") << std::endl;
+	std::ostringstream oss;
+	oss << f;
+	std::string str = oss.str();
+
+	if (str.find('e') != std::string::npos)
+	{
+		std::cout << "float: " << f << "f" << std::endl;
+    	std::cout << "double: " << static_cast<double>(f) << std::endl;
+	}
+	else
+	{
+		std::cout << "float: " << f << (std::fmod(f, 1.0f) ? "f" : ".0f") << std::endl;
+    	std::cout << "double: " << static_cast<double>(f) << (std::fmod(static_cast<double>(f), 1.0f) ? "" : ".0") << std::endl;
+	}
 }
 
 void    ScalarConverter::displayFromDouble(double d)
 {
-    bool    hasDecimal = std::fmod(d, 1.0);
-
 	std::cout << "char: ";
 	if (31 < d && d < 127)
 		std::cout << "'" << static_cast<char>(d) << "'" << std::endl;
@@ -226,12 +245,20 @@ void    ScalarConverter::displayFromDouble(double d)
     else
 		std::cout << static_cast<int>(d) << std::endl;
 
-	std::cout << "float: ";
-    if ((_ouFlow == FLOAT || std::numeric_limits<float>::max() < d || d < -std::numeric_limits<float>::max()) && !std::isinf(d))
-		std::cout << "impossible" << std::endl;
+	std::ostringstream oss;
+	oss << d;
+	std::string str = oss.str();
+
+	if (str.find('e') != std::string::npos)
+	{
+		std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
+		std::cout << "double: " << d << std::endl;
+	}
 	else
-		std::cout << static_cast<float>(d) << (std::fmod(static_cast<float>(d), 1.0f) ? "f" : ".0f") << std::endl;
-	std::cout << "double: " << d << (hasDecimal ? "" : ".0") << std::endl;
+	{
+		std::cout << "float: " << static_cast<float>(d) << (std::fmod(static_cast<float>(d), 1.0f) ? "f" : ".0f") << std::endl;
+		std::cout << "double: " << d << (std::fmod(d, 1.0) ? "" : ".0") << std::endl;
+	}
 }
 
 void    ScalarConverter::displayAllImpossible(void)
@@ -248,7 +275,6 @@ void    ScalarConverter::convert(const std::string& input)
 
     try
     {
-		std::cout << std::setprecision(309);
 		sc.determineType(input);
         switch	(sc._type)
 		{
@@ -283,9 +309,3 @@ void    ScalarConverter::convert(const std::string& input)
 }
 
 const char* ScalarConverter::NonLiteralException::what() const throw() { return ("Non literal value"); }
-
-
-// ./convert 9 && ./convert 57
-// ./convert "" && ./convert 0
-// ./convert 2.f && ./convert 4a
-// ./convert 4.a && ./convert 1111111
