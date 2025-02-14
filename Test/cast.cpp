@@ -1,7 +1,9 @@
-#include <iostream>	
+#include <iostream>
+#include <sstream>
 
 int main()
 {
-	char c = 0;
-	std::cout << static_cast<float>(c) << std::endl;
+	std::stringstream ss;
+	std::cout << (float &)ss << std::endl;
+	std::cout << static_cast<float &>(ss) << std::endl;
 }
