@@ -2,7 +2,7 @@
 #include <iostream>
 
 template <typename T>
-void print(T const &x)
+void print(T &x)
 {
 	std::cout << x << std::endl;
 }
@@ -10,7 +10,7 @@ void print(T const &x)
 template <typename T>
 void	addOne(T &x)
 {
-	x += 1;
+	x += 50;
 }
 
 
@@ -20,17 +20,17 @@ int main(void)
 	float floatArray[5] = {1.1, 2.2, 3.3, 4.4, 5.5};
 	std::string stringArray[5] = {"one", "two", "three", "four", "five"};
 
-	std::cout << "intArray: ";
+	std::cout << "intArray: " << std::endl;
 	iter(intArray, 5, addOne);
 	iter(intArray, 5, print);
 
-	std::cout << "floatArray: ";
+	std::cout << "floatArray: " << std::endl;
 	iter(floatArray, 5, addOne);
 	iter(floatArray, 5, print);
 
-	std::cout << "stringArray: ";
+	std::cout << "stringArray: " << std::endl;
 	iter(stringArray, 5, addOne);
 	iter(stringArray, 5, print);
-
+	
 	return (0);
 }
