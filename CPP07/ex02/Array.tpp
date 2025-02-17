@@ -32,7 +32,7 @@ Array<T>&	Array<T>::operator=(const Array& other)
 template <typename T>
 T&	Array<T>::operator[](unsigned int index)
 {
-	if (index >= _size || index < 0)
+	if (index >= _size)
 		throw IndexOutOfRangeException();
 	return _array[index];
 }

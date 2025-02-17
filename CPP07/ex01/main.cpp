@@ -21,16 +21,16 @@ int main(void)
 	std::string stringArray[5] = {"one", "two", "three", "four", "five"};
 
 	std::cout << "intArray: " << std::endl;
-	iter(intArray, 5, addOne);
-	iter(intArray, 5, print);
+	iter<int>(intArray, 5, addOne<int>);
+	iter(intArray, 5, print<int>);
 
 	std::cout << "floatArray: " << std::endl;
-	iter(floatArray, 5, addOne);
-	iter(floatArray, 5, print);
+	iter(floatArray, 5, addOne<float>);
+	iter<float, void(*)(float&)>(floatArray, 5, print<float>);
 
 	std::cout << "stringArray: " << std::endl;
-	iter(stringArray, 5, addOne);
-	iter(stringArray, 5, print);
+	iter(stringArray, 5, addOne<std::string>);
+	iter(stringArray, 5, print<std::string>);
 	
 	return (0);
 }
