@@ -2,19 +2,23 @@
 #include <iostream>
 #include <algorithm>
 #include <numeric>
-Span::Span() : _n(0) {}
+Span::Span() : _v(), _n(0) {}
 
-Span::Span(unsigned int n) : _n(n) {}
+Span::Span(unsigned int n) : _v(), _n(n) {}
 
 Span::Span(Span const &other)
 {
 	*this = other;
 }
 
-Span::~Span() {}
+Span::~Span()
+{
+	this->_v.clear();
+}
 
 void	Span::addNumber(unsigned int n)
 {
+	std::cout << "Size: " << this->_v.size() << std::endl;
 	if (this->_v.size() == this->_n)
 		throw std::out_of_range("Vector is full.");
 	this->_v.push_back(n);

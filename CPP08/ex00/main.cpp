@@ -5,8 +5,10 @@
 int main(void)
 {
 	std::vector<int> vec;
+
 	for (int i = 0; i < 10; i++)
 		vec.push_back(i);
+
 	try
 	{
 		std::cout << *easyfind(vec, 5) << std::endl;
@@ -16,6 +18,6 @@ int main(void)
 	{
 		std::cout << "Not found" << std::endl;
 	}
+
 	return (0);
 }
-

@@ -23,10 +23,10 @@ int	main(void)
 
 	while (it != ite)
 	{
-		std::cout << *it << std::endl;
-		std::cout << it.base() << std::endl;
+		std::cout << *it << " ";
 		++it;
 	}
+	std::cout << std::endl;
 
 	std::vector<int> vec;
 
@@ -38,10 +38,10 @@ int	main(void)
 
 	while (it2 != ite2)
 	{
-		std::cout << *it2 << std::endl;
-		std::cout << it2.base() << std::endl;
+		std::cout << *it2 << " ";
 		++it2;
 	}
+	std::cout << std::endl;
 
 	return (0);
 }
