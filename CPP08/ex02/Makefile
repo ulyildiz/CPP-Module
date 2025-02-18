@@ -1,7 +1,7 @@
 NAME = mutantstack
 SOURCE = main.cpp
 OBJ = $(SOURCE:.cpp=.o)
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 $(NAME): $(OBJ)
 	c++ $(FLAGS) $(OBJ) -o $(NAME)

@@ -1,5 +1,4 @@
-#include <iostream>
-#include <easyfind.hpp>
+#include "easyfind.hpp"
 #include <vector>
 
 int main(void)
@@ -16,7 +15,7 @@ int main(void)
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "Not found" << std::endl;
+		std::cout << e.what() << std::endl;
 	}
 
 	return (0);
