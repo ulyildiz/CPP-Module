@@ -1,8 +1,21 @@
 #include "BitcoinExchange.hpp"
 
-int main()
+int main(int argc, char *argv[])
 {
-	BitcoinExchange	data;
+	if (argc != 2)
+	{
+		std::cerr << "./btc [input file]" << std::endl;
+		return (1);
+	}
 
-	std::ifstream	file("data.csv");
+	BitcoinExchange	data;
+	
+	if (!data.openFile("data.csv"))
+		return (1);
+	data.extractData();
+
+	if (data.openFile(argv[1]))
+		return (1);
+	data.parseInput();
+
 }
