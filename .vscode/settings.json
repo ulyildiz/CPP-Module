@@ -79,7 +79,8 @@
 	"text_encoding": "cpp",
 	"cinttypes": "cpp",
 	"variant": "cpp",
-	"*.tpp": "cpp"
+	"*.tpp": "cpp",
+	"list": "cpp"
 },
   "C_Cpp_Runner.cCompilerPath": "clang",
   "C_Cpp_Runner.cppCompilerPath": "clang++",

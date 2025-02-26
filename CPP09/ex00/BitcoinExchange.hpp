@@ -19,7 +19,11 @@ class BitcoinExchange
 		bool	openFile(const std::string& fileName);
 		void	extractData(void);
 		void	parseInput(void);
-		
+		void	readInput(void);
+		bool	checkDate(const std::string& date);
+		bool	checkValue(const std::string& value);
+		bool	checkMonthDay(const std::string& month, const std::string& day);
+
 		BitcoinExchange& operator=(const BitcoinExchange& obj);
 };
 

@@ -1,4 +1,5 @@
 #include "BitcoinExchange.hpp"
+#include <cstdlib>
 
 BitcoinExchange::BitcoinExchange() { }
 
@@ -15,7 +16,7 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& obj)
 
 bool	BitcoinExchange::openFile(const std::string& fileName)
 {
-	this->inputFile.open(fileName, std::ios::in);
+	this->inputFile.open(fileName.c_str(), std::ios::in);
 	if (!this->inputFile.is_open())
 	{
 		std::cerr << "Error: could not open file" << std::endl;
@@ -30,13 +31,14 @@ void	BitcoinExchange::extractData(void)
 	std::string	key;
 	double		value;
 
+	std::getline(this->inputFile, line);
 	while (std::getline(this->inputFile, line))
 	{
 		key = line.substr(0, line.find(','));
 		value = std::strtod(line.substr(line.find(',') + 1).c_str(), NULL);
 		this->_dataBase.insert(std::pair<std::string, double>(key, value));
 	}
-
+	
 	inputFile.close();
 	if (inputFile.rdstate() == std::ios::failbit)
 	{
@@ -55,18 +57,7 @@ void	BitcoinExchange::parseInput(void)
 		std::cerr << "Error: invalid file format." << std::endl;
 		return ;
 	}
-	while (std::getline(this->inputFile, line))
-	{
-		std::string	date = line.substr(0, line.find('|'));
-		double		value = std::strtod(line.substr(line.find('|') + 1).c_str(), NULL);
-		if (this->_dataBase.find(date) == this->_dataBase.end())
-			std::cout << date << " : " << "No data" << std::endl;
-		else if (value == 0)
-			std::cout << date << " : " << "No value" << std::endl;
-		else
-			std::cout << date << " : " << value * this->_dataBase[date] << std::endl;
-	}
-
+	this->readInput();
 	inputFile.close();
 	if (inputFile.rdstate() == std::ios::failbit)
 	{
@@ -74,3 +65,50 @@ void	BitcoinExchange::parseInput(void)
 		return ;
 	}
 }
+
+void	BitcoinExchange::readInput(void)
+{
+	std::string	line;
+
+	while (std::getline(this->inputFile, line))
+	{
+		if (!this->checkDate(line))
+		{
+			std::cerr << std::endl;
+			continue ;
+		}
+		if (!this->checkValue(line))
+		{
+			std::cerr << std::endl;
+			continue ;
+		}
+	}
+}
+
+bool	BitcoinExchange::checkDate(const std::string& date)
+{
+	int	dashcount = 0;
+	
+	for (std::string::size_type i = 0; i < date.size(); i++)
+	{
+		if (!isdigit(date[i]) && date[i] != '-')
+			return (std::cerr << "Error: bad input => " << date, false);
+		if (date[i] == '-')
+			dashcount++;
+	}
+	if (dashcount != 2)
+		return (std::cerr << "Error: bad input => " << date, false);
+
+	std::string	year = date.substr(0, date.find('-'));
+	std::string	month = date.substr(date.find('-') + 1, date.rfind('-') - date.find('-') - 1);
+	std::string	day = date.substr(date.rfind('-') + 1);
+
+	if (month.size() != 2 || day.size() != 2)
+		return (std::cerr << "Error: bad input => " << date, false);
+
+	if (!this->checkMonthDay(month, day))
+		return (std::cerr << "Error: bad input => " << date, false);
+	
+	return (true);
+}
+

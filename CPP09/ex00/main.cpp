@@ -13,9 +13,11 @@ int main(int argc, char *argv[])
 	if (!data.openFile("data.csv"))
 		return (1);
 	data.extractData();
-
-	if (data.openFile(argv[1]))
+	(void)argv;
+	if (!data.openFile(argv[1]))
+	{
 		return (1);
+	}
 	data.parseInput();
 
 }
