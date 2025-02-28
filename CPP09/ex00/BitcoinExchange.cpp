@@ -103,12 +103,37 @@ bool	BitcoinExchange::checkDate(const std::string& date)
 	std::string	month = date.substr(date.find('-') + 1, date.rfind('-') - date.find('-') - 1);
 	std::string	day = date.substr(date.rfind('-') + 1);
 
-	if (month.size() != 2 || day.size() != 2)
+	if (month.size() != 2 || month < "01" || month > "12")
 		return (std::cerr << "Error: bad input => " << date, false);
 
-	if (!this->checkMonthDay(month, day))
+	if (std::atoi(year.c_str()) < 0)
 		return (std::cerr << "Error: bad input => " << date, false);
-	
+
+	if (!checkDay(day))
+		return (std::cerr << "Error: bad input => " << date, false);
+
 	return (true);
+}
+
+bool	BitcoinExchange::isLeapYear(const std::string& year)
+{
+	if ((std::atoi(year.c_str()) % 4 == 0 && std::atoi(year.c_str()) % 100 != 0) || std::atoi(year.c_str()) % 400 == 0)
+		return (true);
+	return (false);
+}
+
+bool	BitcoinExchange::checkDay(const std::string& date, const std::string& month, const std::string& year)
+{
+	if (this->isLeapYear(year))
+	{
+		if (month == "02" && (date < "01" || date > "29"))
+			return (false);
+		else if (month != "   ")
+	}
+	else
+	{
+		if (month == "02" && (date < "01" || date > "28"))
+			return (false);
+	}
 }
 

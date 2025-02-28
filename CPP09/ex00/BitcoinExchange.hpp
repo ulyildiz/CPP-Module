@@ -21,9 +21,9 @@ class BitcoinExchange
 		void	parseInput(void);
 		void	readInput(void);
 		bool	checkDate(const std::string& date);
-		bool	checkValue(const std::string& value);
-		bool	checkMonthDay(const std::string& month, const std::string& day);
-
+		
+		bool	checkDay(const std::string& date, const std::string& month, const std::string& year);
+		bool	isLeapYear(const std::string& year);
 		BitcoinExchange& operator=(const BitcoinExchange& obj);
 };
 
