@@ -12,9 +12,8 @@ class MutantStack: public std::stack<T, C> {
 		~MutantStack() { this->c.clear(); }
 		MutantStack &operator=(const MutantStack &other)
 		{
-			if (this == &other)
-				return *this;
-			this->c = other.c;
+			if (this != &other)
+				this->c = other.c;
 			return *this;
 		}
 
