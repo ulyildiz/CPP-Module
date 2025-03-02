@@ -1,5 +1,6 @@
 #include "BitcoinExchange.hpp"
 #include <cstdlib>
+#include <sstream>
 
 BitcoinExchange::BitcoinExchange() { }
 
@@ -72,68 +73,111 @@ void	BitcoinExchange::readInput(void)
 
 	while (std::getline(this->inputFile, line))
 	{
-		if (!this->checkDate(line))
-		{
-			std::cerr << std::endl;
-			continue ;
-		}
-		if (!this->checkValue(line))
-		{
-			std::cerr << std::endl;
-			continue ;
+		try {
+			std::string sdate = line.substr(0, line.find('|') - 1);
+			std::string svalue = line.substr(line.find('|') + 1);
+			float 		fvalue;
+
+			this->checkDate(sdate);
+			this->checkValue(svalue, &fvalue);
+
+			std::cout << sdate << " => " << fvalue * this->dataValue(sdate) << std::endl;
+		} catch(const std::out_of_range& e) {
+			std::cerr << "Error: bad input => " << line << std::endl;
+		} catch (const std::exception& e) {
+			std::cerr << e.what() << std::endl;
+			errno = 0;
 		}
 	}
 }
 
-bool	BitcoinExchange::checkDate(const std::string& date)
+bool	BitcoinExchange::isLeapYear(const int& year)
+{
+	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+		return (true);
+	return (false);
+}
+
+bool	checkSyntax(const std::string& date)
 {
 	int	dashcount = 0;
 	
 	for (std::string::size_type i = 0; i < date.size(); i++)
 	{
 		if (!isdigit(date[i]) && date[i] != '-')
-			return (std::cerr << "Error: bad input => " << date, false);
+			return (true);
 		if (date[i] == '-')
+		{
+			if (i == 0 || i == date.size() - 1)
+				return (false);
 			dashcount++;
+		}
 	}
 	if (dashcount != 2)
-		return (std::cerr << "Error: bad input => " << date, false);
-
-	std::string	year = date.substr(0, date.find('-'));
-	std::string	month = date.substr(date.find('-') + 1, date.rfind('-') - date.find('-') - 1);
-	std::string	day = date.substr(date.rfind('-') + 1);
-
-	if (month.size() != 2 || month < "01" || month > "12")
-		return (std::cerr << "Error: bad input => " << date, false);
-
-	if (std::atoi(year.c_str()) < 0)
-		return (std::cerr << "Error: bad input => " << date, false);
-
-	if (!checkDay(day))
-		return (std::cerr << "Error: bad input => " << date, false);
-
-	return (true);
-}
-
-bool	BitcoinExchange::isLeapYear(const std::string& year)
-{
-	if ((std::atoi(year.c_str()) % 4 == 0 && std::atoi(year.c_str()) % 100 != 0) || std::atoi(year.c_str()) % 400 == 0)
 		return (true);
 	return (false);
 }
 
-bool	BitcoinExchange::checkDay(const std::string& date, const std::string& month, const std::string& year)
+void	BitcoinExchange::checkDate(const std::string& date)
 {
-	if (this->isLeapYear(year))
+	if (checkSyntax(date))
+		throw std::invalid_argument("Error: bad input => " + date);
+
+	int	year, month, day;
+	std::string	syear, smonth, sday;
+	std::stringstream	ss(date);
+
+	std::getline(ss, syear, '-');
+	std::getline(ss, smonth, '-');
+	std::getline(ss, sday);
+
+	year = std::atoi(syear.c_str());
+	month = std::atoi(smonth.c_str());
+	day = std::atoi(sday.c_str());
+
+	if (errno == ERANGE || year < 0 || month < 0 || day < 0)
+		throw std::invalid_argument("Error: bad input => " + date);
+	
+	switch (month)
 	{
-		if (month == "02" && (date < "01" || date > "29"))
-			return (false);
-		else if (month != "   ")
+		case 2:
+			if (this->isLeapYear(year) ? (day < 1 || day > 29) : (day < 1 || day > 28))
+				throw std::invalid_argument("Error: bad input => " + date);
+			break;
+		case 4: case 6: case 9: case 11:
+			if (day < 1 || day > 30)
+				throw std::invalid_argument("Error: bad input => " + date);
+			break;
+		default:
+			if (day < 1 || day > 31)
+				throw std::invalid_argument("Error: bad input => " + date);
+			break;
 	}
-	else
-	{
-		if (month == "02" && (date < "01" || date > "28"))
-			return (false);
-	}
+
 }
 
+void	BitcoinExchange::checkValue(const std::string& value, float* fvalue)
+{
+	*fvalue = std::strtof(value.c_str(), NULL);
+	
+	if (errno == ERANGE || *fvalue > 999)
+		throw std::invalid_argument("Error: too large number.");
+	else if (*fvalue < 1)
+		throw std::invalid_argument("Error: not a positive number.");
+}
+
+double	BitcoinExchange::dataValue(const std::string& date)
+{
+	std::map<std::string, double>::iterator it = this->_dataBase.lower_bound(date);
+	
+	if (it != _dataBase.end() && it == _dataBase.find(date))
+		return (it->second);
+	else if (it == _dataBase.begin())
+	{
+		if (date.compare(it->first) < 0)
+			throw std::invalid_argument("Error: date is too early.");
+	}
+	else 
+		--it;
+	return (it->second);
+}

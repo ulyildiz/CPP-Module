@@ -11,6 +11,13 @@ class BitcoinExchange
 		std::map<std::string, double> _dataBase;
 		std::ifstream	inputFile;
 
+		void	readInput(void);
+		double	dataValue(const std::string& date);
+	
+		void	checkDate(const std::string& date);
+		void	checkValue(const std::string& value, float* fvalue);
+		bool	isLeapYear(const int& year);
+	
 	public:
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange& copy);
@@ -19,11 +26,8 @@ class BitcoinExchange
 		bool	openFile(const std::string& fileName);
 		void	extractData(void);
 		void	parseInput(void);
-		void	readInput(void);
-		bool	checkDate(const std::string& date);
-		
-		bool	checkDay(const std::string& date, const std::string& month, const std::string& year);
-		bool	isLeapYear(const std::string& year);
+
+
 		BitcoinExchange& operator=(const BitcoinExchange& obj);
 };
 
