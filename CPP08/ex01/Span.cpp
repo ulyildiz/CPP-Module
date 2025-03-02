@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <numeric>
+
 Span::Span() : _v(), _n(0) {}
 
 Span::Span(unsigned int n) : _v(), _n(n) {}
