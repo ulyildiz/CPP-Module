@@ -5,7 +5,7 @@
 # include <stack>
 # include <sstream>
 
-class Operations
+class RPN
 {
 	private:
 		std::stack<int> num;
@@ -20,13 +20,13 @@ class Operations
 		void    div();
 	
 	public:
-		Operations();
-		Operations(std::istringstream &iss);
-		~Operations();
-		Operations(const Operations &other);
-		Operations &operator=(const Operations &other);
+		RPN();
+		RPN(std::istringstream &iss);
+		~RPN();
+		RPN(const RPN &other);
+		RPN &operator=(const RPN &other);
 
-		void	doOperations();
+		void	doRPN();
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "PmergeMe.hpp"
 #include <sstream>
+#include <typeinfo>
 
 PmergeMe::PmergeMe() {}
 
@@ -24,9 +25,9 @@ void	PmergeMe::printContainer(const T &container)
 	std::cout << std::endl;
 }
 
-void	PmergeMe::_startTimer() { _start = clock(); }
-void	PmergeMe::_endTimer() { _end = clock(); }
-void	PmergeMe::_printDuration() const { std::cout << "Duration: " << (double)(_end - _start) / CLOCKS_PER_SEC << "s" << std::endl; }
+void	PmergeMe::_startTimer(void) throw() { _start = clock(); }
+void	PmergeMe::_endTimer(void) throw() { _end = clock(); }
+void	PmergeMe::_printDuration(void) const throw() { std::cout << ": " << (double)(_end - _start) / CLOCKS_PER_SEC << "s" << std::endl; }
 
 template <typename T>
 void	PmergeMe::parseInput(T &container, char *argv)
@@ -46,10 +47,13 @@ void	PmergeMe::parseInput(T &container, char *argv)
 }
 
 template <typename T>
-void	PmergeMe::sortContainer(T &container)
+void	PmergeMe::fordJohnson(T &main, T &pend)
 {
 	_startTimer();
 
 
 	_endTimer();
+	
+	std::cout << "Time to process a range of " << container.size() << " elements with std::" << typeid(container).name();
+	_printDuration(); 
 }

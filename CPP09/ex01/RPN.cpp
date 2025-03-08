@@ -2,9 +2,9 @@
 #include <cstdlib>
 #include <cerrno>
 
-Operations::Operations() {}
+RPN::RPN() {}
 
-Operations::Operations(std::istringstream &iss)
+RPN::RPN(std::istringstream &iss)
 {
 	std::string token;
 
@@ -24,14 +24,14 @@ Operations::Operations(std::istringstream &iss)
 	}
 }
 
-Operations::~Operations() {}
+RPN::~RPN() {}
 
-Operations::Operations(const Operations &other)
+RPN::RPN(const RPN &other)
 {
 	*this = other;
 }
 
-Operations &Operations::operator=(const Operations &other)
+RPN &RPN::operator=(const RPN &other)
 {
 	if (this == &other)
 		return (*this);
@@ -40,7 +40,7 @@ Operations &Operations::operator=(const Operations &other)
 	return (*this);
 }
 
-bool	Operations::isOperator(const std::string &s) const
+bool	RPN::isOperator(const std::string &s) const
 {
 	if (s.length() != 1)
 		return (false);
@@ -49,7 +49,7 @@ bool	Operations::isOperator(const std::string &s) const
 	return (false);
 }
 
-bool	Operations::isNumber(const std::string &s) const
+bool	RPN::isNumber(const std::string &s) const
 {
 	size_t i = 0;
 
@@ -64,7 +64,7 @@ bool	Operations::isNumber(const std::string &s) const
 	return (true);
 }
 
-void	Operations::doOperations()
+void	RPN::doRPN()
 {
 	while (!op.empty())
 	{
@@ -92,7 +92,7 @@ void	Operations::doOperations()
 	std::cout << num.top() << std::endl;
 }
 
-void	Operations::add()
+void	RPN::add()
 {
 	if (num.size() < 2)
 		throw std::invalid_argument("Not enough operands");
@@ -103,7 +103,7 @@ void	Operations::add()
 	num.push(b + a);
 }
 
-void	Operations::sub()
+void	RPN::sub()
 {
 	if (num.size() < 2)
 		throw std::invalid_argument("Not enough operands");
@@ -114,7 +114,7 @@ void	Operations::sub()
 	num.push(b - a);
 }
 
-void	Operations::mul()
+void	RPN::mul()
 {
 	if (num.size() < 2)
 		throw std::invalid_argument("Not enough operands");
@@ -125,7 +125,7 @@ void	Operations::mul()
 	num.push(b * a);
 }
 
-void	Operations::div()
+void	RPN::div()
 {
 	if (num.size() < 2)
 		throw std::invalid_argument("Not enough operands");

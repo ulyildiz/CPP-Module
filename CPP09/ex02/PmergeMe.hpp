@@ -10,9 +10,9 @@ class PmergeMe
 		clock_t		_start;
 		clock_t		_end;
 
-		void		_startTimer();
-		void		_endTimer();
-		void		_printDuration() const;
+		void		_startTimer(void) throw();
+		void		_endTimer(void) throw();
+		void		_printDuration(void) const throw();
 
 	public:
 		PmergeMe();
@@ -27,8 +27,14 @@ class PmergeMe
 		void	printContainer(const T &container);
 
 		template <typename T>
-		void	sortContainer(T &container);
+		void	fordJohnson(T &main, T &pend);
+		
+		template <typename T>
+		void	mergeInsertionSort(T &container);
 
+		template <typename T>
+		void	binarySearch(T &container, int low, int high, int key);
+		
 };
 
 #endif
