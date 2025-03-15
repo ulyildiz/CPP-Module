@@ -4,9 +4,9 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
+	if (argc != 2)
 	{
-		std::cerr << "Usage: ./a.out <integers...>" << std::endl;
+		std::cerr << "Usage: ./PmergeMe \"integers...\"" << std::endl;
 		return (1);
 	}
 
@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 	std::deque<int>		d_pend;
 
 	try {
-		PmergeMe::parseInput(v_main, argv[1]);
-		PmergeMe::parseInput(d_main, argv[1]);
+		PmergeMe::parseInput<std::vector<int> >(v_main, argv[1]);
+		PmergeMe::parseInput<std::deque<int> >(d_main, argv[1]);
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
 		return (1);
@@ -26,13 +26,13 @@ int main(int argc, char *argv[])
 	PmergeMe pm;
 
 	std::cout << "Before:" ;
-	pm.printContainer(v_main);
+	pm.printContainer<std::vector<int> >(v_main);
 
-	pm.fordJohnson(v_main, v_pend);
-	pm.fordJohnson(d_main, d_pend);
+	pm.fordJohnson<std::vector<int> >(v_main, v_pend);
+	pm.fordJohnson<std::deque<int> >(d_main, d_pend);
 
 	std::cout << "After:" ;
-	pm.printContainer(d_main);
+	pm.printContainer<std::deque<int> >(d_main);
 
 	return (0);
 }
