@@ -4,7 +4,6 @@
 # include <iostream>
 # include <ctime>
 # include <sstream>
-# include <typeinfo>
 # include <cstdlib>
 # include <deque>
 # include <vector>

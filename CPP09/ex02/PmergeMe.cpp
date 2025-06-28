@@ -109,7 +109,7 @@ void	PmergeMe::fordJohnson(std::vector<int> &container) throw()
 	_jacobsthalNumbers(container);
 
 	_startTimer();
-	
+	mergeInsertion(container);
 	_endTimer();
 	std::cout << "Ford-Johnson algorithm executed";
 	_printDuration();

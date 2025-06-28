@@ -13,8 +13,8 @@ int main(int argc, char* argv[])
 	std::istringstream iss(expr);
 	
 	try {
-		Operations op(iss);
-		op.doOperations();
+		RPN op(iss);
+		op.doRPN();
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
 		return (1);
