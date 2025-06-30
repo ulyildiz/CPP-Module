@@ -20,9 +20,26 @@ void	PmergeMe::_startTimer(void) throw() { _start = clock(); }
 void	PmergeMe::_endTimer(void) throw() { _end = clock(); }
 void	PmergeMe::_printDuration(void) const throw() { std::cout << ": " << std::fixed << std::setprecision(6) << (double)(_end - _start) / CLOCKS_PER_SEC * 1000000 << "us" << std::endl; }
 
-std::deque<int> PmergeMe::binaryInsertion(std::deque<int> &smaller, std::deque<int> &larger)
+void	PmergeMe::_jacobsthalNumbers(std::size_t size)
 {
+	int prevJacob = 1;
+	
+	for (int n = 2; n < 2 + size; ++n)
+	{
+		int currentJacob = (std::pow(2, n) - (std::pow(-1, n))) / 3;
+		insertionOrder.push_back(currentJacob);
 
+		// Add descending numbers between current and prev
+		for (int i = currentJacob - 1; i > prevJacob; --i)
+			insertionOrder.push_back(i);
+
+		prevJacob = currentJacob;
+	}
+}
+
+std::deque<int>	PmergeMe::binaryInsertion(std::deque<int> &smalls, std::deque<int> &larges)
+{
+		
 }
 
 std::deque<int>	PmergeMe::mergeInsertion(std::deque<int> &container)
@@ -57,9 +74,9 @@ std::deque<int>	PmergeMe::mergeInsertion(std::deque<int> &container)
 
 void	PmergeMe::fordJohnson(std::deque<int> &container) throw()
 {
-	_jacobsthalNumbers(container);
+	_jacobsthalNumbers(container.size());
 	std::cout << "Jacobsthal numbers: ";
-	printContainer(jacobsthalNumbers);
+	printContainer(insertionOrder);
 
 	_startTimer();
 	std::deque<int> A = mergeInsertion(container);
@@ -106,7 +123,7 @@ std::vector<int>	PmergeMe::mergeInsertion(std::vector<int> &container)
 
 void	PmergeMe::fordJohnson(std::vector<int> &container) throw()
 {
-	_jacobsthalNumbers(container);
+	_jacobsthalNumbers(container.size());
 
 	_startTimer();
 	mergeInsertion(container);

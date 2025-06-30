@@ -7,7 +7,7 @@
 # include <cstdlib>
 # include <deque>
 # include <vector>
-# include <math.h>
+# include <cmath>
 
 class PmergeMe
 {
@@ -19,21 +19,11 @@ class PmergeMe
 		void		_endTimer(void) throw();
 		void		_printDuration(void) const throw();
 
-		template <typename T>
-		void		_jacobsthalNumbers(T &container) throw()
-		{
-			std::size_t size = container.size();
-			std::size_t n = 0;
-
-			while (n < size)
-			{
-				n = (pow(2, n) - pow(-1, n)) / 3;
-				jacobsthalNumbers.push_back(n);
-			}
-		}
+		void		_jacobsthalNumbers(std::size_t size);
 
 		std::deque<int>	mergeInsertion(std::deque<int> &container);
-		std::deque<int>	binaryInsertion(std::deque<int> &smaller, std::deque<int> &larger);
+		std::deque<int>	binaryInsertion(std::deque<int> &smalls, std::deque<int> &larges);
+		std::size_t PmergeMe::binarySearch(std::deque<int> &container, int value);
 
 		std::vector<int> mergeInsertion(std::vector<int> &container);
 		std::vector<int> binaryInsertion(std::vector<int> &smaller, std::vector<int> &larger);
@@ -45,7 +35,7 @@ class PmergeMe
 		~PmergeMe();
 
 		std::size_t comparisonCount;
-		std::vector<int> jacobsthalNumbers;
+		std::vector<int> insertionOrder;
 
 		void	fordJohnson(std::deque<int> &container) throw();
 		void	fordJohnson(std::vector<int> &container) throw();
