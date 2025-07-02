@@ -19,19 +19,17 @@ PmergeMe::~PmergeMe() {}
 
 void	PmergeMe::_startTimer(void) throw() { _start = clock(); }
 void	PmergeMe::_endTimer(void) throw() { _end = clock(); }
-void	PmergeMe::_printDuration(void) const throw() { std::cout << ": " << std::fixed << std::setprecision(6) << (double)(_end - _start) / CLOCKS_PER_SEC * 1000000 << "us" << std::endl; }
+void	PmergeMe::_printDuration(void) const throw() { std::cout << ": " << std::fixed << std::setprecision(6) << (double)(_end - _start) / CLOCKS_PER_SEC  << "s" << std::endl; }
 
 void	PmergeMe::jacobsthalNumbers(std::size_t size)
 {
 	std::size_t prevJacob = 1;
 	
-	std::cout << "size = " << size << std::endl;
 	for (std::size_t n = 2; prevJacob < size; ++n)
 	{
 		std::size_t currentJacob = (std::pow(2, n) - (std::pow(-1, n))) / 3;
 		insertionOrder.push_back(currentJacob);
 
-		// Add descending numbers between current and prev
 		for (std::size_t i = currentJacob - 1; i > prevJacob; --i)
 			insertionOrder.push_back(i);
 
@@ -100,6 +98,7 @@ void	PmergeMe::fordJohnson(std::deque<int> &container) throw()
 	_startTimer();
 	std::deque<int> A = _mergeInsertion(container);
 	_endTimer();
+	std::cout << "After(deque): ";
 	printContainer(A);
 	std::cout << "Ford-Johnson algorithm executed";
 	_printDuration();
@@ -166,6 +165,7 @@ void	PmergeMe::fordJohnson(std::vector<int> &container) throw()
 	_startTimer();
 	std::vector<int> A = _mergeInsertion(container);
 	_endTimer();
+	std::cout << "After(vector): ";
 	printContainer(A);
 	std::cout << "Ford-Johnson algorithm executed";
 	_printDuration();

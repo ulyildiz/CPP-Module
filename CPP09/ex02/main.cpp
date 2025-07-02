@@ -5,9 +5,8 @@ bool	checkNumerical(char *argv)
 {
 	for (int i = 0; argv[i]; ++i)
 	{
-		std::cout << argv[i] << std::endl;
-		if (!(isdigit(argv[i]) || ' '))
-			return ( std::cout << "g: " << argv[i] << std::endl, false);
+		if (!(isdigit(argv[i]) || argv[i] == ' '))
+			return (false);
 	}
 	return (true);
 }
@@ -23,7 +22,7 @@ int main(int argc, char *argv[])
 	PmergeMe pmergeMe;
 
 	std::deque<int> dequeContainer;
-	std::deque<int> vectorContainer;
+	std::vector<int> vectorContainer;
 
 	for (int i = 1; i < argc; i++)
 	{
