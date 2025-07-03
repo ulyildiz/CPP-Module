@@ -53,11 +53,17 @@ void	BitcoinExchange::parseInput(void)
 	std::string	line;
 
 	std::getline(this->inputFile, line);
-	if (line != "date | value")
+
+	std::stringstream ss(line);
+	std::string date, pipe, value;
+	ss >> date >> pipe >> value;
+
+	if (date != "date" || pipe != "|" || value != "value")
 	{
 		std::cerr << "Error: invalid file format." << std::endl;
 		return ;
 	}
+
 	this->readInput();
 	inputFile.close();
 	if (inputFile.rdstate() == std::ios::failbit)
@@ -158,6 +164,9 @@ void	BitcoinExchange::checkDate(const std::string& date)
 
 void	BitcoinExchange::checkValue(const std::string& value, float* fvalue)
 {
+	if (value.empty() || value == " ")
+		throw std::invalid_argument("Error: empty value.");
+
 	*fvalue = std::strtof(value.c_str(), NULL);
 	
 	if (errno == ERANGE || *fvalue > 999)
@@ -169,7 +178,7 @@ void	BitcoinExchange::checkValue(const std::string& value, float* fvalue)
 double	BitcoinExchange::dataValue(const std::string& date)
 {
 	std::map<std::string, double>::iterator it = this->_dataBase.lower_bound(date);
-	
+
 	if (it != _dataBase.end() && it == _dataBase.find(date))
 		return (it->second);
 	else if (it == _dataBase.begin())
