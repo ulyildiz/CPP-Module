@@ -1,11 +1,21 @@
 #include "PmergeMe.hpp"
 #include <sstream>
 
+bool	isAllWhitespace(char *argv)
+{
+	for (char *c = argv; *c; ++c)
+	{
+		if (!isspace(*c))
+			return (false);
+	}
+	return (true);
+}
+
 bool	checkNumerical(char *argv)
 {
 	for (int i = 0; argv[i]; ++i)
 	{
-		if (!(isdigit(argv[i]) || argv[i] == ' '))
+		if (!isdigit(argv[i]) && isAllWhitespace(argv))
 			return (false);
 	}
 	return (true);
@@ -31,7 +41,7 @@ int main(int argc, char *argv[])
 		std::stringstream ss(argv[i]);
 		int number;
 		while (ss >> number)
-		{
+		{			
 			if (ss.peek() == ' ')
 				ss.ignore();
 			if (number < 0 )

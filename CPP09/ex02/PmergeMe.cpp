@@ -41,6 +41,7 @@ std::size_t PmergeMe::_binarySearch(std::deque<int> &container, int value)
 {
 	std::size_t left = 0;
 	std::size_t right = container.size();
+
 	while (left < right)
 	{
 		std::size_t mid = left + (right - left) / 2;
@@ -49,7 +50,7 @@ std::size_t PmergeMe::_binarySearch(std::deque<int> &container, int value)
 		else
 			right = mid;
 	}
-	return left;
+	return (left);
 }
 
 std::deque<int>	PmergeMe::_mergeInsertion(std::deque<int> &container)
@@ -90,7 +91,7 @@ std::deque<int>	PmergeMe::_mergeInsertion(std::deque<int> &container)
 		else
 			sortedLarger.insert(sortedLarger.begin() + pos, value);
 	}
-	return sortedLarger;
+	return (sortedLarger);
 }
 
 void	PmergeMe::fordJohnson(std::deque<int> &container) throw()
@@ -98,6 +99,7 @@ void	PmergeMe::fordJohnson(std::deque<int> &container) throw()
 	_startTimer();
 	std::deque<int> A = _mergeInsertion(container);
 	_endTimer();
+
 	std::cout << "After(deque): ";
 	printContainer(A);
 	std::cout << "Ford-Johnson algorithm executed";
@@ -108,6 +110,7 @@ std::size_t PmergeMe::_binarySearch(std::vector<int> &container, int value)
 {
 	std::size_t left = 0;
 	std::size_t right = container.size();
+
 	while (left < right)
 	{
 		std::size_t mid = left + (right - left) / 2;
@@ -116,7 +119,7 @@ std::size_t PmergeMe::_binarySearch(std::vector<int> &container, int value)
 		else
 			right = mid;
 	}
-	return left;
+	return (left);
 }
 
 std::vector<int>	PmergeMe::_mergeInsertion(std::vector<int> &container)
@@ -150,6 +153,7 @@ std::vector<int>	PmergeMe::_mergeInsertion(std::vector<int> &container)
 	{
 		if (insertionOrder[i] - 1 >= smaller.size())
 			continue;
+
 		int value = smaller[insertionOrder[i] - 1];
 		std::size_t pos = _binarySearch(sortedLarger, value);
 		if (pos == sortedLarger.size())
@@ -157,7 +161,7 @@ std::vector<int>	PmergeMe::_mergeInsertion(std::vector<int> &container)
 		else
 			sortedLarger.insert(sortedLarger.begin() + pos, value);
 	}
-	return sortedLarger;
+	return (sortedLarger);
 }
 
 void	PmergeMe::fordJohnson(std::vector<int> &container) throw()
@@ -165,6 +169,7 @@ void	PmergeMe::fordJohnson(std::vector<int> &container) throw()
 	_startTimer();
 	std::vector<int> A = _mergeInsertion(container);
 	_endTimer();
+
 	std::cout << "After(vector): ";
 	printContainer(A);
 	std::cout << "Ford-Johnson algorithm executed";
