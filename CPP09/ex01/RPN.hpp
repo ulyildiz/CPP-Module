@@ -18,6 +18,18 @@ class RPN
 		void    sub();
 		void    mul();
 		void    div();
+
+		template<typename T>
+		void reverseStack(std::stack<T>& s)
+		{
+			std::stack<T> temp;
+			while (!s.empty())
+			{
+				temp.push(s.top());
+				s.pop();
+			}
+			s = temp;
+		}
 	
 	public:
 		RPN();

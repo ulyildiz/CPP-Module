@@ -87,7 +87,9 @@ void	BitcoinExchange::readInput(void)
 			this->checkDate(sdate);
 			this->checkValue(svalue, &fvalue);
 
-			std::cout << sdate << " => " << fvalue * this->dataValue(sdate) << std::endl;
+			float dValue = this->dataValue(sdate);
+
+			std::cout << sdate << " => " << fvalue << " = " << fvalue * dValue << std::endl;
 		} catch(const std::out_of_range& e) {
 			std::cerr << "Error: bad input => " << line << std::endl;
 		} catch (const std::exception& e) {
@@ -159,7 +161,6 @@ void	BitcoinExchange::checkDate(const std::string& date)
 				throw std::invalid_argument("Error: bad input => " + date);
 			break;
 	}
-
 }
 
 void	BitcoinExchange::checkValue(const std::string& value, float* fvalue)
@@ -186,7 +187,7 @@ double	BitcoinExchange::dataValue(const std::string& date)
 		if (date.compare(it->first) < 0)
 			throw std::invalid_argument("Error: date is too early.");
 	}
-	else 
+	else
 		--it;
 	return (it->second);
 }

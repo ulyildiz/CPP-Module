@@ -23,6 +23,9 @@ RPN::RPN(std::istringstream &iss)
 		else
 			throw std::invalid_argument("Invalid token");
 	}
+
+	reverseStack(num);
+	reverseStack(op);
 }
 
 RPN::~RPN() {}
@@ -92,7 +95,7 @@ void	RPN::doRPN()
 			default:
 				throw std::invalid_argument("Invalid operator");
 		}
-		op.pop();
+		op.pop();	
 	}
 
 	if (num.size() != 1)
@@ -111,7 +114,7 @@ void	RPN::add()
 	int b = num.top();
 	num.pop();
 
-	num.push(b + a);
+	num.push(a + b);
 }
 
 void	RPN::sub()
@@ -125,7 +128,7 @@ void	RPN::sub()
 	int b = num.top();
 	num.pop();
 
-	num.push(b - a);
+	num.push(a - b);
 }
 
 void	RPN::mul()
@@ -139,7 +142,7 @@ void	RPN::mul()
 	int b = num.top();
 	num.pop();
 
-	num.push(b * a);
+	num.push(a * b);
 }
 
 void	RPN::div()
@@ -155,6 +158,6 @@ void	RPN::div()
 
 	int b = num.top();
 	num.pop();
-
-	num.push(b / a);
+	
+	num.push(a / b);
 }
