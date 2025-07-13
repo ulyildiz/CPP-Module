@@ -8,12 +8,11 @@
 class RPN
 {
 	private:
-		std::stack<int> num;
-		std::stack<char> op;
+		std::stack<int>	expressions;
 
-		bool	isOperator(const std::string &s) const;
-		bool	isNumber(const std::string &s) const;
-		
+		bool	isOperator(const std::string &s) const throw();
+		bool	isNumber(const std::string &s) const throw();
+
 		void    add();
 		void    sub();
 		void    mul();
@@ -33,12 +32,12 @@ class RPN
 	
 	public:
 		RPN();
-		RPN(std::istringstream &iss);
 		~RPN();
 		RPN(const RPN &other);
 		RPN &operator=(const RPN &other);
 
-		void	doRPN();
+		void	doRPN(std::stringstream &iss);
+		bool	isValidExpression(std::stringstream &iss) const throw();
 };
 
 #endif

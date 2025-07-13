@@ -170,9 +170,9 @@ void	BitcoinExchange::checkValue(const std::string& value, float* fvalue)
 
 	*fvalue = std::strtof(value.c_str(), NULL);
 	
-	if (errno == ERANGE || *fvalue > 999)
+	if (errno == ERANGE || *fvalue >= 1000.0f	)
 		throw std::invalid_argument("Error: too large number.");
-	else if (*fvalue < 1)
+	else if (*fvalue <= 0.0f)
 		throw std::invalid_argument("Error: not a positive number.");
 }
 

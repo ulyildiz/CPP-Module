@@ -4,30 +4,6 @@
 
 RPN::RPN() {}
 
-RPN::RPN(std::istringstream &iss)
-{
-	std::string token;
-
-	while (iss >> token)
-	{
-		if (isOperator(token))
-			op.push(token[0]);
-		else if (isNumber(token))
-		{
-			long int n = std::strtol(token.c_str(), NULL, 10);
-			if (errno == ERANGE ||n > 9)
-				throw std::invalid_argument("Number out of range");
-
-			num.push(std::atoi(token.c_str()));
-		}
-		else
-			throw std::invalid_argument("Invalid token");
-	}
-
-	reverseStack(num);
-	reverseStack(op);
-}
-
 RPN::~RPN() {}
 
 RPN::RPN(const RPN &other)
@@ -40,13 +16,12 @@ RPN &RPN::operator=(const RPN &other)
 	if (this == &other)
 		return (*this);
 
-	num = other.num;
-	op = other.op;
+	expressions = other.expressions;
 
 	return (*this);
 }
 
-bool	RPN::isOperator(const std::string &s) const
+bool	RPN::isOperator(const std::string &s) const throw()
 {
 	if (s.length() != 1)
 		return (false);
@@ -57,11 +32,11 @@ bool	RPN::isOperator(const std::string &s) const
 	return (false);
 }
 
-bool	RPN::isNumber(const std::string &s) const
+bool	RPN::isNumber(const std::string &s) const throw()
 {
 	size_t i = 0;
 
-	if (s[0] == '-' || s[0] == '+')
+	if ((s[0] == '-' || s[0] == '+') && s.length() > 1)
 		i++;
 
 	while (i < s.length())
@@ -74,90 +49,121 @@ bool	RPN::isNumber(const std::string &s) const
 	return (true);
 }
 
-void	RPN::doRPN()
+bool RPN::isValidExpression(std::stringstream &iss) const throw()
 {
-	while (!op.empty())
+	std::string token;
+
+	while (iss >> token)
 	{
-		switch (op.top())
-		{
-			case '+':
-				add();
-				break;
-			case '-':
-				sub();
-				break;
-			case '*':
-				mul();
-				break;
-			case '/':
-				div();
-				break;
-			default:
-				throw std::invalid_argument("Invalid operator");
-		}
-		op.pop();	
+		if (!isNumber(token) && !isOperator(token))
+			return (false);
 	}
 
-	if (num.size() != 1)
+	return (true);
+}
+
+void	RPN::doRPN(std::stringstream &iss)
+{
+	std::string token;
+
+	while (iss >> token)
+	{
+//		std::cout << "Processing token: " << token << std::endl;
+		if (isNumber(token))
+		{
+//			std::cout << "Found number: " << token << std::endl;
+			long value = std::strtol(token.c_str(), NULL, 10);
+			if (errno == ERANGE || value > 10)
+				throw std::invalid_argument("Number out of range");
+
+			expressions.push(static_cast<int>(value));
+		}	
+		else if (isOperator(token))
+		{
+//			std::cout << "Found operator: " << token << std::endl;
+			switch (token[0])
+			{
+				case '+':
+//					std::cout << "Adding..." << std::endl;
+					add();
+					break;
+				case '-':
+					sub();
+					break;
+				case '*':
+					mul();
+					break;
+				case '/':
+					div();
+					break;
+				default:
+					throw std::invalid_argument("Invalid operator: " + token);
+			}
+		}
+		else
+			throw std::invalid_argument("Invalid token: " + token);
+	}
+
+	if (expressions.size() != 1)
 		throw std::invalid_argument("Invalid expression");
-	std::cout << num.top() << std::endl;
+	std::cout << expressions.top() << std::endl;
 }
 
 void	RPN::add()
 {
-	if (num.size() < 2)
+	if (expressions.size() < 2)
 		throw std::invalid_argument("Not enough operands");
 	
-	int a = num.top();
-	num.pop();
+	int a = expressions.top();
+	expressions.pop();
 
-	int b = num.top();
-	num.pop();
+	int b = expressions.top();
+	expressions.pop();
 
-	num.push(a + b);
+	expressions.push(b + a);
 }
 
 void	RPN::sub()
 {
-	if (num.size() < 2)
+	if (expressions.size() < 2)
 		throw std::invalid_argument("Not enough operands");
 
-	int a = num.top();
-	num.pop();
+	int a = expressions.top();
+	expressions.pop();
 
-	int b = num.top();
-	num.pop();
+	int b = expressions.top();
+	expressions.pop();
 
-	num.push(a - b);
+	expressions.push(b - a);
 }
 
 void	RPN::mul()
 {
-	if (num.size() < 2)
+	if (expressions.size() < 2)
 		throw std::invalid_argument("Not enough operands");
 
-	int a = num.top();
-	num.pop();
+	int a = expressions.top();
+	expressions.pop();
 
-	int b = num.top();
-	num.pop();
+	int b = expressions.top();
+	expressions.pop();
 
-	num.push(a * b);
+	expressions.push(b * a);
 }
 
 void	RPN::div()
 {
-	if (num.size() < 2)
+	if (expressions.size() < 2)
 		throw std::invalid_argument("Not enough operands");
 
-	int a = num.top();
-	num.pop();
+	int a = expressions.top();
+	expressions.pop();
 
 	if (a == 0)
 		throw std::invalid_argument("Division by zero");
 
-	int b = num.top();
-	num.pop();
+	int b = expressions.top();
+	expressions.pop();
 	
-	num.push(a / b);
+	expressions.push(b / a);
 }

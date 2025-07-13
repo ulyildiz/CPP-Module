@@ -9,12 +9,19 @@ int main(int argc, char* argv[])
 		return (1);
 	}
 
-	std::string expr(argv[1]);
-	std::istringstream iss(expr);
-	
+	std::string iExpr(argv[1]);
+	RPN expr;
+
+	std::stringstream ss(iExpr);
+	if (!expr.isValidExpression(ss))
+	{
+		std::cerr << "Invalid expression" << std::endl;
+		return (1);
+	}
+
 	try {
-		RPN op(iss);
-		op.doRPN();
+		std::stringstream ss2(iExpr);
+		expr.doRPN(ss2);
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
 		return (1);
