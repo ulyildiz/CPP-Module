@@ -68,10 +68,8 @@ void	RPN::doRPN(std::stringstream &iss)
 
 	while (iss >> token)
 	{
-//		std::cout << "Processing token: " << token << std::endl;
 		if (isNumber(token))
 		{
-//			std::cout << "Found number: " << token << std::endl;
 			long value = std::strtol(token.c_str(), NULL, 10);
 			if (errno == ERANGE || value > 10)
 				throw std::invalid_argument("Number out of range");
@@ -80,11 +78,9 @@ void	RPN::doRPN(std::stringstream &iss)
 		}	
 		else if (isOperator(token))
 		{
-//			std::cout << "Found operator: " << token << std::endl;
 			switch (token[0])
 			{
 				case '+':
-//					std::cout << "Adding..." << std::endl;
 					add();
 					break;
 				case '-':

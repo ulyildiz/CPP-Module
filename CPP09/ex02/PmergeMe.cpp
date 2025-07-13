@@ -37,7 +37,7 @@ void	PmergeMe::jacobsthalNumbers(std::size_t size)
 	}
 }
 
-std::size_t PmergeMe::_binarySearch(std::deque<int> &container, int value)
+std::size_t PmergeMe::_binarySearch(const std::deque<int> &container, int value)
 {
 	std::size_t left = 0;
 	std::size_t right = container.size();
@@ -106,7 +106,7 @@ void	PmergeMe::fordJohnson(std::deque<int> &container) throw()
 	_printDuration();
 }
 
-std::size_t PmergeMe::_binarySearch(std::vector<int> &container, int value)
+std::size_t PmergeMe::_binarySearch(const std::vector<int> &container, int value)
 {
 	std::size_t left = 0;
 	std::size_t right = container.size();

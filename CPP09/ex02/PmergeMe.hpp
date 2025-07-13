@@ -17,10 +17,10 @@ class PmergeMe
 
 		
 		std::deque<int>		_mergeInsertion(std::deque<int> &container);
-		std::size_t			_binarySearch(std::deque<int> &container, int value);
+		std::size_t			_binarySearch(const std::deque<int> &container, int value);
 		
 		std::vector<int>	_mergeInsertion(std::vector<int> &container);
-		std::size_t			_binarySearch(std::vector<int> &container, int value);
+		std::size_t			_binarySearch(const std::vector<int> &container, int value);
 		
 	public:
 		PmergeMe();
