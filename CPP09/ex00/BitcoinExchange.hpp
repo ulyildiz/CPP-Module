@@ -9,7 +9,7 @@ class BitcoinExchange
 {
 	private:
 		std::map<std::string, double> _dataBase;
-		std::ifstream	inputFile;
+		std::ifstream	_inputFile;
 
 		void	readInput(void);
 		double	dataValue(const std::string& date);

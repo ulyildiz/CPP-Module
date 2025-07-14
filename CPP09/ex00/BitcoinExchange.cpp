@@ -17,8 +17,8 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& obj)
 
 bool	BitcoinExchange::openFile(const std::string& fileName)
 {
-	this->inputFile.open(fileName.c_str(), std::ios::in);
-	if (!this->inputFile.is_open())
+	this->_inputFile.open(fileName.c_str(), std::ios::in);
+	if (!this->_inputFile.is_open())
 	{
 		std::cerr << "Error: could not open file" << std::endl;
 		return (false);
@@ -32,16 +32,16 @@ void	BitcoinExchange::extractData(void)
 	std::string	key;
 	double		value;
 
-	std::getline(this->inputFile, line);
-	while (std::getline(this->inputFile, line))
+	std::getline(this->_inputFile, line);
+	while (std::getline(this->_inputFile, line))
 	{
 		key = line.substr(0, line.find(','));
 		value = std::strtod(line.substr(line.find(',') + 1).c_str(), NULL);
 		this->_dataBase.insert(std::pair<std::string, double>(key, value));
 	}
 	
-	inputFile.close();
-	if (inputFile.rdstate() == std::ios::failbit)
+	_inputFile.close();
+	if (_inputFile.rdstate() == std::ios::failbit)
 	{
 		std::cerr << "Error: could not close file." << std::endl;
 		return ;
@@ -52,7 +52,7 @@ void	BitcoinExchange::parseInput(void)
 {
 	std::string	line;
 
-	std::getline(this->inputFile, line);
+	std::getline(this->_inputFile, line);
 
 	std::stringstream ss(line);
 	std::string date, pipe, value;
@@ -65,8 +65,8 @@ void	BitcoinExchange::parseInput(void)
 	}
 
 	this->readInput();
-	inputFile.close();
-	if (inputFile.rdstate() == std::ios::failbit)
+	_inputFile.close();
+	if (_inputFile.rdstate() == std::ios::failbit)
 	{
 		std::cerr << "Error: could not close file." << std::endl;
 		return ;
@@ -77,7 +77,7 @@ void	BitcoinExchange::readInput(void)
 {
 	std::string	line;
 
-	while (std::getline(this->inputFile, line))
+	while (std::getline(this->_inputFile, line))
 	{
 		try {
 			std::string sdate = line.substr(0, line.find('|') - 1);
@@ -156,9 +156,12 @@ void	BitcoinExchange::checkDate(const std::string& date)
 			if (day < 1 || day > 30)
 				throw std::invalid_argument("Error: bad input => " + date);
 			break;
-		default:
+		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
 			if (day < 1 || day > 31)
 				throw std::invalid_argument("Error: bad input => " + date);
+			break;
+		default:
+			throw std::invalid_argument("Error: bad input => " + date);
 			break;
 	}
 }
