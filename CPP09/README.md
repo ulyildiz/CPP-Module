@@ -33,7 +33,7 @@ The program uses a **binary search tree** (implemented via `std::map`) to store 
 - `std::strtof()` - String to float conversion
 - `std::atoi()` - String to integer conversion
 - `std::map::insert()` - Container insertion
-- `std::map::lower_bound()` - Binary search tree traversal
+- `std::map::lower_bound()` - Binary search tree traversal (?)
 - `std::map::find()` - Element lookup
 
 ### Data Structures
@@ -243,24 +243,109 @@ std::size_t PmergeMe::_binarySearch(const std::vector<int> &container, int value
 The sequence follows: J(n) = (2^n - (-1)^n) / 3
 - J(0) = 0, J(1) = 1, J(2) = 1, J(3) = 3, J(4) = 5, J(5) = 11, ...
 
-```cpp
-void PmergeMe::jacobsthalNumbers(std::size_t size)
-{
-    std::size_t prevJacob = 1;
-    
-    for (std::size_t n = 2; prevJacob < size; ++n)
-    {
-        std::size_t currentJacob = (std::pow(2, n) - (std::pow(-1, n))) / 3;
-        insertionOrder.push_back(currentJacob);
-        
-        // Add intermediate values in reverse order
-        for (std::size_t i = currentJacob - 1; i > prevJacob; --i)
-            insertionOrder.push_back(i);
-        
-        prevJacob = currentJacob;
-    }
-}
+### Mathematical Derivation of Jacobsthal Numbers
+
+#### Step 1: Problem Setup
+In the Ford-Johnson algorithm, we need to maintain a main chain where the number of elements up to and including position `a(k-1)` contains exactly `2^k - 1` elements for optimal binary search performance.
+
+This gives us the constraint:
 ```
+t(k-1) + t(k) = 2^k  ... (equation 1)
+```
+
+Where:
+- `t(k)` represents the k-th term in our sequence
+- `t(1) = 1` (initial condition)
+- `t(0) = 1` (set for convenience)
+
+#### Step 2: Recursive Expansion
+Starting from equation (1), we can solve for `t(k)`:
+```
+t(k) = 2^k - t(k-1)
+```
+
+Substituting recursively:
+```
+t(k) = 2^k - t(k-1)
+t(k) = 2^k - (2^(k-1) - t(k-2))
+t(k) = 2^k - 2^(k-1) + t(k-2)
+```
+
+Continuing this pattern:
+```
+t(k) = 2^k - 2^(k-1) + t(k-2)
+t(k) = 2^k - 2^(k-1) + (2^(k-2) - t(k-3))
+t(k) = 2^k - 2^(k-1) + 2^(k-2) - t(k-3)
+```
+
+#### Step 3: Pattern Recognition
+Continuing the expansion, we get:
+```
+t(k) = 2^k - 2^(k-1) + 2^(k-2) - 2^(k-3) + ... + (-1)^k * 2^0
+```
+
+This can be written as:
+```
+t(k) = Σ(i=0 to k) (-1)^i * 2^(k-i)
+```
+
+Or equivalently:
+```
+t(k) = 2^k * Σ(i=0 to k) (-1)^i * 2^(-i)
+```
+
+#### Step 4: Geometric Series Evaluation
+The sum `Σ(i=0 to k) (-1)^i * 2^(-i)` is a geometric series with:
+- First term `a = 1`
+- Common ratio `r = -1/2`
+- Number of terms = `k+1`
+
+Using the geometric series formula: `S = a * (1 - r^(k+1)) / (1 - r)`
+
+```
+Σ(i=0 to k) (-1)^i * 2^(-i) = 1 * (1 - (-1/2)^(k+1)) / (1 - (-1/2))
+                              = (1 - (-1/2)^(k+1)) / (3/2)
+                              = (2/3) * (1 - (-1/2)^(k+1))
+```
+
+#### Step 5: Final Formula Derivation
+Substituting back:
+```
+t(k) = 2^k * (2/3) * (1 - (-1/2)^(k+1))
+     = (2^(k+1) / 3) * (1 - (-1/2)^(k+1))
+     = (2^(k+1) / 3) * (1 - (-1)^(k+1) / 2^(k+1))
+     = (2^(k+1) / 3) - ((-1)^(k+1) / 3)
+     = (2^(k+1) - (-1)^(k+1)) / 3
+```
+
+Since `(-1)^(k+1) = -(-1)^k`, we get:
+```
+t(k) = (2^(k+1) + (-1)^k) / 3
+```
+
+#### Step 6: Verification
+Let's verify with known values:
+- `t(0) = (2^1 + (-1)^0) / 3 = (2 + 1) / 3 = 1` ✓
+- `t(1) = (2^2 + (-1)^1) / 3 = (4 - 1) / 3 = 1` ✓
+- `t(2) = (2^3 + (-1)^2) / 3 = (8 + 1) / 3 = 3` ✓
+- `t(3) = (2^4 + (-1)^3) / 3 = (16 - 1) / 3 = 5` ✓
+
+#### Step 7: Implementation Formula
+In the code, we use `n` starting from 2, so the formula becomes:
+```cpp
+currentJacob = (std::pow(2, n) - (std::pow(-1, n))) / 3
+```
+
+This corresponds to `t(n-1)` in our mathematical derivation.
+
+**Summary of the derivation:**
+1. Started with constraint: `t(k-1) + t(k) = 2^k`
+2. Expanded recursively to get alternating series
+3. Recognized as geometric series with ratio `-1/2`
+4. Applied geometric series formula
+5. Simplified to final form: `t(k) = (2^(k+1) + (-1)^k) / 3`
+
+This mathematical foundation ensures that the Ford-Johnson algorithm maintains optimal binary search conditions throughout the insertion process.
 
 ### System Functions Used
 - `std::vector::insert()` - Element insertion
