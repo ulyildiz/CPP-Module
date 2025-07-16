@@ -35,6 +35,9 @@ The program uses a **binary search tree** (implemented via `std::map`) to store 
 - `std::map::insert()` - Container insertion
 - `std::map::lower_bound()` - Binary search tree traversal (?)
 - `std::map::find()` - Element lookup
+- `std::string::find_first_not_of()` - Used to skip leading spaces in a string
+- `std::string::find_last_not_of()` - Used to skip trailing spaces in a string
+- `std::string::erase()` - Used to delete characters from a string
 
 ### Data Structures
 - **Primary Container**: `std::map<std::string, double>` for O(log n) lookups
@@ -86,8 +89,8 @@ void RPN::doRPN(std::stringstream &iss)
     {
         if (isNumber(token))
         {
-            long value = std::strtol(token.c_str(), NULL, 10);
-            expressions.push(static_cast<int>(value));
+            long double value = std::strtold(token.c_str(), NULL);
+            expressions.push(value);
         }
         else if (isOperator(token))
         {
@@ -95,8 +98,8 @@ void RPN::doRPN(std::stringstream &iss)
             if (expressions.size() < 2)
                 throw std::invalid_argument("Not enough operands");
             
-            int a = expressions.top(); expressions.pop();
-            int b = expressions.top(); expressions.pop();
+            long double a = expressions.top(); expressions.pop();
+            long double b = expressions.top(); expressions.pop();
             
             expressions.push(b + a);  // Note: order matters for - and /
         }
