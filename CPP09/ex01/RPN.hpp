@@ -8,7 +8,7 @@
 class RPN
 {
 	private:
-		std::stack<int>	expressions;
+		std::stack<long double>	expressions;
 
 		bool	isOperator(const std::string &s) const throw();
 		bool	isNumber(const std::string &s) const throw();

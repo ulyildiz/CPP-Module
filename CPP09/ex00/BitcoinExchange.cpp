@@ -60,7 +60,7 @@ void	BitcoinExchange::parseInput(void)
 
 	if (date != "date" || pipe != "|" || value != "value")
 	{
-		std::cerr << "Error: invalid file format." << std::endl;
+		std::cerr << "Error: invalid file header." << std::endl;
 		return ;
 	}
 
@@ -168,14 +168,34 @@ void	BitcoinExchange::checkDate(const std::string& date)
 
 void	BitcoinExchange::checkValue(const std::string& value, float* fvalue)
 {
-	if (value.empty() || value == " ")
+	std::string s = value;
+	s.erase(0, s.find_first_not_of(" \t\n\r\f\v"));
+	s.erase(s.find_last_not_of(" \t\n\r\f\v") + 1);
+
+	if (s.empty())
 		throw std::invalid_argument("Error: empty value.");
 
-	*fvalue = std::strtof(value.c_str(), NULL);
-	
-	if (errno == ERANGE || *fvalue >= 1000.0f	)
-		throw std::invalid_argument("Error: too large number.");
-	else if (*fvalue <= 0.0f)
+	bool hasDecimal = false;
+	for (std::size_t i = 0; i < s.length(); ++i)
+	{
+		if (i == 0 && (s[i] == '-' || s[i] == '+'))
+			continue;
+		if (s[i] == '.')
+		{
+			if (hasDecimal)
+				throw std::invalid_argument("Error: invalid value => " + value);
+			hasDecimal = true;
+			continue;
+		}
+		if (!std::isdigit(s[i]))
+			throw std::invalid_argument("Error: invalid value => " + value);
+	}
+
+	*fvalue = std::strtof(s.c_str(), NULL);
+
+	if (errno == ERANGE || *fvalue > 1000.0f)
+		throw std::invalid_argument("Error: too large a number.");
+	if (*fvalue < 0.0f)
 		throw std::invalid_argument("Error: not a positive number.");
 }
 
