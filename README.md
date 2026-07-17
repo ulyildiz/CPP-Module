@@ -118,6 +118,10 @@ This module has its own, much more detailed [CPP09/README.md](CPP09/README.md) c
 
 ---
 
+## License
+
+MIT — see [LICENSE](LICENSE).
+
 ## Notes
 
 - Every exercise uses `-std=c++98 -Wall -Wextra -Werror`, in line with 42's requirements for this project.
